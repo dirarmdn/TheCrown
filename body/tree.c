@@ -1,16 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-// Definisi struktur data
-typedef struct t_kerajaan *address;
-typedef struct t_kerajaan {
-    char nama;
-    int hp; // health point
-    int p_pow, p_int, p_inf; // power, intelligence, influence
-    address nb, fs, parent; // next brother, first son, parent
-} kerajaan;
-typedef address royal_tree;
-typedef address king;
+#include <string.h>
+#include "../header/dhira.h"
 
 void fill_node(address node, int level) {
     if (node == NULL)
@@ -23,7 +14,7 @@ void fill_node(address node, int level) {
             node->p_int = 100;
             node->p_inf = 100;
             break;
-        case 1: // Queen and King�s Mistresses
+        case 1: // Queen and Kings Mistresses
             node->hp = 100;
             node->p_pow = rand() % 61 + 20; // 20-80
             node->p_int = rand() % 71 + 30; // 30-100
@@ -51,8 +42,6 @@ void fill_node(address node, int level) {
             break;
     }
 }
-#include <string.h>
-#include "../header/dhira.h"
 
 address create_node(const char *name, int age, boolean gender, int hp, int p_pow, int p_int, int p_inf) {
     address p_new;
@@ -93,6 +82,20 @@ void add_child(address parent, address child) {
         }
         sibling->nb = child;
     }
+}
+
+address search_node(address root, const char *name) {
+    if (root == NULL)
+        return NULL;
+
+    if (strcmp(root->name, name) == 0)
+        return root;
+
+    address result = search_node(root->fs, name); // Search in first son
+    if (result == NULL)
+        result = search_node(root->nb, name);     // Search in next brother
+    
+    return result;
 }
 
 void show_royal_tree(address node, int depth) {
@@ -140,6 +143,12 @@ void build_tree() {
     add_child(second_prince, create_node("Louis", 2, 0, 80, 75, 70, 85));
     add_child(second_princess, create_node("Lorde", 1, 1, 80, 75, 70, 85));
     add_child(second_princess->fs, create_node("Shuri", 1, 1, 80, 75, 70, 85));
+}
+
+int max_point(address node1, address node2) {
+    int max1 = node1->hp + node1->p_pow + node1->p_int + node1->p_inf;
+    int max2 = node2->hp + node2->p_pow + node2->p_int + node2->p_inf;
+    return (max1 > max2) ? max1 : max2;
 }
 
 void choose_character(address player, const char *name, int age, boolean gender) {
