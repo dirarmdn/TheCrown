@@ -1,6 +1,7 @@
 /* File        : dhea.h */
 /* Deskripsi   :  */
 /* Dibuat oleh : Dhea Dria Spralia @dheaasprla 2024 */
+#include "dhira.h"
 #ifndef DHEA_H
 #define DHEA_H
 

@@ -26,6 +26,8 @@ address player;
 // Tujuan : menampilkan menu utama aplikasi
 void display_menu(int highlight);
 
+void game_menu();
+
 // Tujuan : untuk menampilkan layar "Enter Your Name"
 void display_enter_name_screen();
 
