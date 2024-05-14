@@ -1,16 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define true 1
+#define false 0
+#define boolean unsigned char 
 
 // Definisi struktur kerajaan
-typedef struct t_kerajaan *address;
+typedef struct t_kerajaan *address; 
 typedef struct t_kerajaan {
     char nama;
-    int hp; // health point
-    int p_pow, p_int, p_inf; // power, intelligence, influence
-    address nb, fs, parent; // next brother, first son, parent
-} kerajaan;
+    int umur;
+    boolean gender;
+    int hp; //health point
+    int p_pow; //poin power
+    int p_int; //poin intelligence
+    int p_inf; //poin influence
+    address nb; //next brother (dalam tree, bukan dalam keluarga)
+    address fs; //first son
+    address pr; //parent
+} kerajaan; 
 typedef address royal_tree;
-typedef address king;
 
 // Fungsi untuk menetukan level suatu node
 int findLevel(address root, address node, int level) {
@@ -39,7 +47,7 @@ int main() {
     tree->nama = 'A';
     tree->fs = NULL;
     tree->nb = NULL;
-    tree->parent = NULL;
+    tree->pr = NULL;
 
     // Membuat 4 kerajaan dengan B, C, D, E sebagai first son dari A
     tree->fs = (address)malloc(sizeof(kerajaan));
@@ -61,7 +69,7 @@ int main() {
     while (current != NULL) {
         address child = current->fs;
         while (child != NULL) {
-            child->parent = current;
+            child->pr = current;
             child = child->nb;
         }
         current = current->fs;

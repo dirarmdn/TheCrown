@@ -1,19 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define true 1
+#define false 0
+#define boolean unsigned char 
 
 // Definisi struktur kerajaan
-typedef struct t_kerajaan *address;
+typedef struct t_kerajaan *address; 
 typedef struct t_kerajaan {
     char nama;
-    int hp; // health point
-    int p_pow, p_int, p_inf; // power, intelligence, influence
-    address nb, fs, parent; // next brother, first son, parent
-} kerajaan;
+    int umur;
+    boolean gender;
+    int hp; //health point
+    int p_pow; //poin power
+    int p_int; //poin intelligence
+    int p_inf; //poin influence
+    address nb; //next brother (dalam tree, bukan dalam keluarga)
+    address fs; //first son
+    address pr; //parent
+} kerajaan; 
 typedef address royal_tree;
-typedef address king;
 
 // Fungsi untuk menetapkan nilai-nilai awal untuk node baru
-/*address createNode(char name, int hp, int power, int intelligence, int influence) {
+address createNode(char name, int hp, int power, int intelligence, int influence) {
     address newNode = (address)malloc(sizeof(kerajaan));
     newNode->nama = name;
     newNode->hp = hp;
@@ -22,10 +30,10 @@ typedef address king;
     newNode->p_inf = influence;
     newNode->fs = NULL;
     newNode->nb = NULL;
-    newNode->parent = NULL;
+    newNode->pr = NULL;
     return newNode;
 }
-*/
+
 
 // Fungsi untuk menghitung rerata dari p_pow, p_int, dan p_inf dari suatu node
 float calculateAverage(address node) {
