@@ -8,7 +8,7 @@
 void fill_node();
 // Tujuan : membandingkan poin 2 node 
 int max_point();
-// Tujuan : mencari node Dhea
+// Tujuan : mencari node 
 address search_node();
 // Tujuan : menampilkan menu pemilihan 
 void display_stage();
