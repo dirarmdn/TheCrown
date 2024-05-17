@@ -26,13 +26,13 @@ address player;
 // Tujuan : menampilkan menu utama aplikasi
 void display_menu(int highlight);
 
-void game_menu();
+void game_menu(const char *name);
 
 // Tujuan : untuk menampilkan layar "Enter Your Name"
 void display_enter_name_screen();
 
 // Tujuan : untuk menampilkan layar "Welcome" dengan nama pemain
-void display_welcome_screen(const char *name, int highlight);
+// void display_welcome_screen(const char *name, int highlight);
 
 // Tujuan : untuk menampilkan layar "How to Play This Game?"
 void display_help_screen();

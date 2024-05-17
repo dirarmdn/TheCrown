@@ -9,30 +9,33 @@ void fill_node(address node, int level) {
 
     switch (level) {
         case 0: // King
+            node->gender = 1;
+            node->age = rand() % 80;
             node->hp = 100;
             node->p_pow = 100;
             node->p_int = 100;
             node->p_inf = 100;
             break;
-        case 1: // Queen and Kings Mistresses
+        case 1: // Queen and King's Mistresses
             node->hp = 100;
+            node->gender = 0;
             node->p_pow = rand() % 61 + 20; // 20-80
             node->p_int = rand() % 71 + 30; // 30-100
             node->p_inf = rand() % 51 + 50; // 50-100
             break;
-        case 2: // King�s Child
+        case 2: // King's Child
             node->hp = 100;
             node->p_pow = rand() % 41 + 30; // 30-70
             node->p_int = rand() % 41 + 30; // 30-70
             node->p_inf = rand() % 41 + 30; // 30-70
             break;
-        case 3: // King�s Child Spouse
+        case 3: // King's Child Spouse
             node->hp = 100;
             node->p_pow = rand() % 21 + 20; // 20-40
             node->p_int = rand() % 21 + 20; // 20-40
             node->p_inf = rand() % 41 + 20; // 20-60
             break;
-        case 4: // King�s Grandchild
+        case 4: // King's Grandchild
             node->hp = 100;
             node->p_pow = rand() % 41; // 0-40
             node->p_int = rand() % 41; // 0-40
@@ -100,18 +103,27 @@ address search_node(address root, const char *name) {
 
 void show_royal_tree(address node, int depth) {
     if (node == NULL) return;
-    printf("%*c", depth * 4, ' ');
+    // printf("%*c",' ');
     if (depth == 0) {
-        printf("King ");
+        printf("- King ");
     } else if (depth == 1 && node->gender == 0) {
-        printf("Queen ");
+        printf("+ + Queen ");
     } else if (depth == 1 && node->gender == 1) {
-        printf("Mistress ");
-    } else if (depth > 1 && node->gender == 0) {
-        printf("Prince ");
-    } else if (depth > 1 && node->gender == 1) {
-        printf("Princess ");
+        printf("+ + Mistress ");
+    } else if (depth == 2 && node->gender == 0) {
+        printf("- - - Prince ");
+    } else if (depth == 2 && node->gender == 1) {
+        printf("- - - Princess ");
+    } else if (depth == 3 && node->gender == 0) {
+        printf("+ + + Prince");
+    } else if (depth == 3 && node->gender == 1) {
+        printf("+ + + Princess ");
+    } else if (depth > 3 && node->gender == 0) {
+        printf("- - - - Prince ");
+    } else if (depth > 3 && node->gender == 1) {
+        printf("- - - - Princess");
     }
+
     printf("%s\n", node->name); // Print the entire name
     show_royal_tree(node->fs, depth + 1); // print first son recursively
     show_royal_tree(node->nb, depth); // print next brother recursively at the same depth

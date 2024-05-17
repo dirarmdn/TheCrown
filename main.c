@@ -11,6 +11,7 @@ int main() {
     int prev_highlight = -1;
     char name[50];
     char gender;
+    int start_new_game = 1;
 
     build_tree();
 
@@ -37,23 +38,32 @@ int main() {
             case 13: // Enter key
                 switch(highlight) {
                     case 1:
-                        system("cls");
-                        printf("Starting New Game...\n");
-                        printf("Enter your name: ");
-                        scanf("%s", name);
-                        printf("Enter your gender (L/P): ");
-                        scanf(" %c", &gender); //kok berhenti disini sih
-                        system("cls");
-                        printf("Hello, %s! Welcome to the game!\n", name);
-                        printf("Royal Tree:\n");
-                        show_royal_tree(king, 0);
-                        game_menu();
+                        if (start_new_game) {
+                            system("cls");
+                            printf("Starting New Game...\n");
+                            printf("Enter your name: ");
+                            scanf("%s", name);
+                            printf("Enter your gender (L/P): ");
+                            scanf(" %c", &gender);
+                            system("cls");
+                            start_new_game = 0; // Set flag to false to avoid entering name again
+                        }
+                        game_menu(name);
+                        prev_highlight = -1; // Reset highlight to refresh the menu
                         break;
                     case 2:
-                        printf("Help selected.\n");
+                        system("cls");
+                        display_help_screen();
+                        printf("\nPress any key to return to the main menu...\n");
+                        getch();
+                        prev_highlight = -1; // Reset highlight to refresh the menu
                         break;
                     case 3:
-                        printf("Credits selected.\n");
+                        system("cls");
+                        display_credits_screen();
+                        printf("\nPress any key to return to the main menu...\n");
+                        getch();
+                        prev_highlight = -1; // Reset highlight to refresh the menu
                         break;
                     case 4:
                         printf("Exiting...\n");
