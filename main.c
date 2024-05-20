@@ -10,6 +10,7 @@ int main() {
     int highlight = 1;
     int prev_highlight = -1;
     char name[50];
+    int age;
     char gender;
     int start_new_game = 1;
 
@@ -43,8 +44,11 @@ int main() {
                             printf("Starting New Game...\n");
                             printf("Enter your name: ");
                             scanf("%s", name);
+                            printf("Enter your age: ");
+                            scanf("%d", &age);
                             printf("Enter your gender (L/P): ");
                             scanf(" %c", &gender);
+                            choose_character(name, age, gender);
                             system("cls");
                             start_new_game = 0; // Set flag to false to avoid entering name again
                         }

@@ -6,7 +6,7 @@
 #define DHEA_H
 
 // Tujuan : Mengisi node kosong 
-void fill_node();
+void fill_node(address node, int level, const char *name, boolean gender);
 // Tujuan : membandingkan poin 2 node 
 int max_point();
 // Tujuan : mencari node 

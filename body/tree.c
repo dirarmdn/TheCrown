@@ -2,40 +2,79 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../header/dhira.h"
+#include "../header/dhea.h"
 
-void fill_node(address node, int level) {
-    if (node == NULL)
-        return;
+address create_node() {
+    address node;
+    
+    node = (address)malloc(sizeof(kingdom));
+    if (node == NULL) {
+        printf("Gagal Alokasi\n");
+        exit(1);
+    }
+
+    node->pr = NULL;
+    node->fs = NULL;
+    node->nb = NULL;
+
+    return node;
+}
+
+void fill_node(address node, int level, const char *name, boolean gender) {
+
+    node->name = (char *)malloc((strlen(name) + 1) * sizeof(char));
+    if (node->name == NULL) {
+        printf("Gagal Alokasi\n");
+        free(node);
+    }
 
     switch (level) {
         case 0: // King
-            node->gender = 1;
-            node->age = rand() % 80;
+            strcpy(node->name, name);
+            node->gender = 0;
+            node->age = rand() % 51 + 50; // 50-100
             node->hp = 100;
             node->p_pow = 100;
             node->p_int = 100;
             node->p_inf = 100;
             break;
         case 1: // Queen and King's Mistresses
+            strcpy(node->name, name);
+            node->gender = 1;
+            node->age = rand() % 31 + 70; // 30-100
             node->hp = 100;
-            node->gender = 0;
             node->p_pow = rand() % 61 + 20; // 20-80
             node->p_int = rand() % 71 + 30; // 30-100
             node->p_inf = rand() % 51 + 50; // 50-100
             break;
         case 2: // King's Child
+            strcpy(node->name, name);
+            node->age = rand() % 41 + 50; // 40-50
+            node->gender = gender;
             node->hp = 100;
             node->p_pow = rand() % 41 + 30; // 30-70
             node->p_int = rand() % 41 + 30; // 30-70
             node->p_inf = rand() % 41 + 30; // 30-70
             break;
         case 3: // King's Child Spouse
+            strcpy(node->name, name);            
+            if (node->pr->gender == 1)
+            {
+                node->gender = 0;
+            } else {
+                node->gender = 1;
+            }
+            
+            node->age = rand() % 31 + 20; // 30-50
             node->hp = 100;
             node->p_pow = rand() % 21 + 20; // 20-40
             node->p_int = rand() % 21 + 20; // 20-40
             node->p_inf = rand() % 41 + 20; // 20-60
             break;
         case 4: // King's Grandchild
+            strcpy(node->name, name);
+            node->age = rand() % 21;
+            node->gender = gender;
             node->hp = 100;
             node->p_pow = rand() % 41; // 0-40
             node->p_int = rand() % 41; // 0-40
@@ -44,35 +83,6 @@ void fill_node(address node, int level) {
         default:
             break;
     }
-}
-
-address create_node(const char *name, int age, boolean gender, int hp, int p_pow, int p_int, int p_inf) {
-    address p_new;
-    
-    p_new = (address)malloc(sizeof(kingdom));
-    if (p_new == NULL) {
-        printf("Gagal Alokasi\n");
-    }
-
-    // Alokasi memori untuk menyimpan nama
-    p_new->name = (char *)malloc((strlen(name) + 1) * sizeof(char));
-    if (p_new->name == NULL) {
-        printf("Gagal Alokasi\n");
-        free(p_new);
-        return NULL;
-    }
-
-    // Salin nama ke dalam struktur
-    strcpy(p_new->name, name);
-    p_new->gender = gender;
-    p_new->age = age;
-    p_new->hp = hp;
-    p_new->p_pow = p_pow;
-    p_new->p_int = p_int;
-    p_new->p_inf = p_inf;
-    p_new->fs = NULL;
-    p_new->nb = NULL;
-    return p_new;
 }
 
 void add_child(address parent, address child) {
@@ -85,6 +95,7 @@ void add_child(address parent, address child) {
         }
         sibling->nb = child;
     }
+    child->pr = parent;
 }
 
 address search_node(address root, const char *name) {
@@ -106,22 +117,22 @@ void show_royal_tree(address node, int depth) {
     // printf("%*c",' ');
     if (depth == 0) {
         printf("- King ");
-    } else if (depth == 1 && node->gender == 0) {
+    } else if (depth == 1 && node->nb != NULL) {
         printf("+ + Queen ");
-    } else if (depth == 1 && node->gender == 1) {
+    } else if (depth == 1 && node->nb == NULL) {
         printf("+ + Mistress ");
     } else if (depth == 2 && node->gender == 0) {
         printf("- - - Prince ");
     } else if (depth == 2 && node->gender == 1) {
         printf("- - - Princess ");
     } else if (depth == 3 && node->gender == 0) {
-        printf("+ + + Prince");
+        printf("+ + + Prince ");
     } else if (depth == 3 && node->gender == 1) {
         printf("+ + + Princess ");
     } else if (depth > 3 && node->gender == 0) {
         printf("- - - - Prince ");
     } else if (depth > 3 && node->gender == 1) {
-        printf("- - - - Princess");
+        printf("- - - - Princess ");
     }
 
     printf("%s\n", node->name); // Print the entire name
@@ -131,30 +142,58 @@ void show_royal_tree(address node, int depth) {
 
 
 void build_tree() {
-    king = create_node("George", 56, 1, 100, 90, 80, 95);
-    address queen = create_node("Mary", 45, 0, 95, 85, 90, 95);
-    address first_prince = create_node("Edward", 26, 1, 90, 85, 80, 90);
-    address first_princess = create_node("Elizabeth", 23, 0, 85, 80, 85, 90);
-    address second_princess = create_node("Victoria", 23, 0, 85, 80, 85, 90);
-
+    address queen, mistress, first_prince, second_prince, third_prince, fourth_prince, first_princess, second_princess, third_princess, fourth_princess, first_inlaw, second_inlaw, third_inlaw;
+    
+    king = create_node();
+    queen = create_node();
+    mistress = create_node(); 
+    first_prince = create_node(); 
+    second_prince = create_node();
+    third_prince = create_node();
+    fourth_prince = create_node();
+    first_princess = create_node(); 
+    second_princess = create_node(); 
+    third_princess = create_node(); 
+    fourth_princess = create_node();
+    first_inlaw = create_node(); 
+    second_inlaw = create_node(); 
+    third_inlaw = create_node(); 
+    
     add_child(king, queen);
+    add_child(king, mistress);
+
     add_child(queen, first_prince);
     add_child(queen, first_princess);
-    add_child(first_prince, create_node("Philip", 13, 0, 80, 75, 70, 85));
-    add_child(first_princess, create_node("Selene", 12, 1, 80, 75, 70, 85));
 
-    address mistress = create_node("Rashta", 35, 1, 95, 85, 90, 95);
-    address second_prince = create_node("Richard", 20, 0, 90, 85, 80, 90);
-    address thePrincess3 = create_node("Charlotte", 10, 1, 85, 80, 85, 90);
-    address thePrincess4 = create_node("Anne", 8, 1, 85, 80, 85, 90);
-    address thePrincess5 = create_node("Caroline", 3, 1, 85, 80, 85, 90);
-
-    add_child(king, mistress);
     add_child(mistress, second_prince);
-    add_child(mistress, second_princess);
-    add_child(second_prince, create_node("Louis", 2, 0, 80, 75, 70, 85));
-    add_child(second_princess, create_node("Lorde", 1, 1, 80, 75, 70, 85));
-    add_child(second_princess->fs, create_node("Shuri", 1, 1, 80, 75, 70, 85));
+
+    add_child(first_prince, first_inlaw);
+    add_child(first_princess, second_inlaw);
+    add_child(second_prince, third_inlaw);
+
+    fill_node(king, 0, "George", 0);
+    fill_node(queen, 1, "Mary", 1);
+    fill_node(mistress, 1, "Rashta", 1);
+    fill_node(first_prince, 2, "Zayne", 0);
+    fill_node(second_prince, 2, "Xavier", 0);
+    fill_node(first_princess, 2, "Elizabeth", 1);
+
+    fill_node(third_prince, 4, "Louis", 0);
+    fill_node(fourth_prince, 4, "Rafayel", 0);
+    fill_node(second_princess, 4, "Victoria", 1);
+    fill_node(third_princess, 4, "Shuri", 1);
+    fill_node(fourth_princess, 4, "Charlotte", 1);
+    
+    fill_node(first_inlaw, 3, "Lena", 1);
+    fill_node(second_inlaw, 3, "Vyn", 0);
+    fill_node(third_inlaw, 3, "Selene", 1);
+
+    add_child(first_inlaw, third_prince);
+    add_child(first_inlaw, second_princess);
+
+    add_child(third_inlaw, third_princess);
+    add_child(third_inlaw, fourth_prince);
+    add_child(third_inlaw, fourth_princess);
 }
 
 int max_point(address node1, address node2) {
@@ -163,13 +202,50 @@ int max_point(address node1, address node2) {
     return (max1 > max2) ? max1 : max2;
 }
 
-void choose_character(address player, const char *name, int age, boolean gender) {
-    if (gender == 0)
+void choose_character(const char *name, int age, char gender) {
+    address player;
+    if (gender == 'L')
     {
-        
+        player = search_node(king, "Zayne");
+        printf("\nnama pemain asalnya: %s\n", player->name);
+    } else {
+        player = search_node(king, "Elizabeth");
+        printf("\nnama pemain asalnya: %s\n", player->name);
+    }
+
+    if (player != NULL)
+    {
+        free(player->name); // free nama sebelumnya
+
+        player->name = (char *)malloc((strlen(name) + 1) * sizeof(char)); // alokasikan nama yang baru
+        if (player->name == NULL)
+        {
+            printf("Gagal Alokasi");
+            exit(1);
+        }
+
+        strcpy(player->name, name);        
+        player->age = age;
+    } else {
+        printf("Karakter tidak ditemukan!");
     }
     
+    strcpy(player->name, name);
+
 }
+
+// int main() {
+//     const char *name = "Sel";
+//     int age = 21;
+//     char gender = 'L';
+
+//     build_tree();
+//     choose_character(name, age, gender);
+//     show_royal_tree(king, 0);
+
+//     return 0;
+// }
+
 
 void display_main_character () {
     

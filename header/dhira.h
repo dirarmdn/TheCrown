@@ -43,7 +43,7 @@ void display_credits_screen();
 // Tree Processing
 
 // Tujuan : membuat node kosong dengan alokasi dinamis
-address create_node(const char *name, int age, boolean gender, int hp, int p_pow, int p_int, int p_inf);
+address create_node();
 
 // Tujuan : untuk membuat struktur tree
 void build_tree();
@@ -52,7 +52,7 @@ void build_tree();
 void add_child(address parent, address child);
 
 // Tujuan : untuk memilih player node
-void choose_character(address player, const char *name, int age, boolean gender);
+void choose_character(const char *name, int age, char gender);
 
 // Tujuan : untuk mencetak player node
 void display_main_character ();
