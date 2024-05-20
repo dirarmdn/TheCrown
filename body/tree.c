@@ -197,11 +197,23 @@ void build_tree() {
 }
 
 int max_point(address node1, address node2) {
-    boolean max1 = node1->p_pow > node2->p_pow;
-    boolean max2 = node1->p_inf > node2->p_inf;
-    boolean max3 = node1->p_int > node2->p_int;
-    return (max1 > max2) ? max1 : max2;
+    int maxCount1 = 0;
+    int maxCount2 = 0;
+
+    if (node1->p_pow > node2->p_pow) maxCount1++;
+    else if (node1->p_pow < node2->p_pow) maxCount2++;
+
+    if (node1->p_int > node2->p_int) maxCount1++;
+    else if (node1->p_int < node2->p_int) maxCount2++;
+
+    if (node1->p_inf > node2->p_inf) maxCount1++;
+    else if (node1->p_inf < node2->p_inf) maxCount2++;
+
+    if (maxCount1 > maxCount2) return 1;
+    else if (maxCount2 > maxCount1) return 2;
+    else return 0; // Jika seri
 }
+
 
 void choose_character(const char *name, int age, char gender) {
     address player;

@@ -9,6 +9,7 @@ void game_menu(const char *name) {
     int choice;
     int highlight = 1;
     int prev_highlight = -1;
+    address player; // Assuming player is declared and initialized somewhere
 
     while (1) {
         if (highlight != prev_highlight) {
@@ -23,15 +24,15 @@ void game_menu(const char *name) {
             prev_highlight = highlight;
         }
 
-        choice = getch(); // Mendapatkan input dari keyboard
+        choice = getch(); // Get input from keyboard
 
         switch(choice) {
-            case 72: // Panah atas
+            case 72: // Up arrow
                 if (highlight > 1) {
                     highlight--;
                 }
                 break;
-            case 80: // Panah bawah
+            case 80: // Down arrow
                 if (highlight < 4) {
                     highlight++;
                 }
@@ -40,6 +41,7 @@ void game_menu(const char *name) {
                 switch(highlight) {
                     case 1:
                         system("cls");
+                        arena_battle(player);
                         printf("Battle Arena selected.\n");
                         printf("\nPress any key to return to the menu...\n");
                         getch();
@@ -51,7 +53,7 @@ void game_menu(const char *name) {
                         getch();
                         break;
                     case 3:
-                        return; // Kembali ke menu sebelumnya
+                        return; // Return to previous menu
                     case 4:
                         printf("Exiting...\n");
                         exit(0);
@@ -67,8 +69,11 @@ void game_menu(const char *name) {
 
 void display_menu(int highlight) {
     printf("The Crown : Battle to the top\n");
-    char *menu_items[MENU_ITEMS] = {"Start New Game", "Help", "Credits", "Exit"};
-    for (int i = 0; i < MENU_ITEMS; i++) {
+    char *menu_items[] = {"Start New Game", "Help", "Credits", "Exit"};
+    int num_menu_items = sizeof(menu_items) / sizeof(menu_items[0]); // Calculate the number of menu items
+
+    int i; // Declare the loop variable outside the loop
+    for (i = 0; i < num_menu_items; i++) {
         if(highlight == i + 1) {
             printf("-> %d. %s\n", i + 1, menu_items[i]);
         } else {
@@ -80,6 +85,7 @@ void display_menu(int highlight) {
 void display_enter_name_screen() {
     printf("Enter your name: ");
 }
+
 
 // void display_welcome_screen(const char *name, int highlight) {
 
@@ -103,4 +109,16 @@ void display_credits_screen() {
     printf("Dhea Dria Spralia (231511040)\n");
     printf("Dhira Ramadini (231511041)\n");
     printf("Firgianathyas Siti Fadillah (231511047)\n");
+}
+
+void arena_battle(address player) {
+    char enemy_name[50];
+    address enemy;
+
+    show_royal_tree(king, 0);
+    display_main_character(player);
+    printf("Masukkan lawan: ");
+    scanf("%s", enemy_name);
+    enemy = find_enemy_by_name(king, enemy_name); // Assuming you have a function to find the enemy by name
+    max_point(player, enemy);
 }
