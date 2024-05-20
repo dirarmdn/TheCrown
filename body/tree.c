@@ -197,8 +197,9 @@ void build_tree() {
 }
 
 int max_point(address node1, address node2) {
-    int max1 = node1->hp + node1->p_pow + node1->p_int + node1->p_inf;
-    int max2 = node2->hp + node2->p_pow + node2->p_int + node2->p_inf;
+    boolean max1 = node1->p_pow > node2->p_pow;
+    boolean max2 = node1->p_inf > node2->p_inf;
+    boolean max3 = node1->p_int > node2->p_int;
     return (max1 > max2) ? max1 : max2;
 }
 
@@ -247,6 +248,32 @@ void choose_character(const char *name, int age, char gender) {
 // }
 
 
-void display_main_character () {
-    
+void arena_battle(address player) {
+    char enemy_name[50];
+    address enemy;
+
+    show_royal_tree(king, 0);
+    display_main_character(player);
+    printf("Masukkan lawan:");
+    scanf("%s", &enemy_name);
+    enemy = (king, enemy_name);
+    max_point(player, enemy);
+}
+
+
+void display_main_character (address node) {
+    printf("\nSpesifikasi node yang dipegang saat ini:\n");
+    printf("Nama: %c\n", node->name);
+    printf("Umur: %d\n", node->age);
+    if (node->gender == 1)
+    {
+        printf("Gender: Woman\n");
+    } else {
+        printf("Gender: Man\n");
+    }
+    printf("Nama: %c\n", node->gender);
+    printf("HP: %d\n", node->hp);
+    printf("Power: %d\n", node->p_pow);
+    printf("Intelligence: %d\n", node->p_int);
+    printf("Influence: %d\n", node->p_inf);
 }
