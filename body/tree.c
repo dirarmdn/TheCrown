@@ -290,3 +290,60 @@ void display_main_character (address node) {
 
 //     return 0;
 // }
+void nodes_at_level(address root, int level, address *result, int *index) {
+    if (root == NULL) {
+        return;
+    }
+    if (level == 0) {
+        result[(*index)++] = root;
+    } else {
+        nodes_at_level(root->fs, level - 1, result, index);
+        nodes_at_level(root->nb, level, result, index);
+    }
+}
+
+float calculateAverage(address node) {
+    if (node == NULL)
+        return 0;
+    return (node->p_pow + node->p_int + node->p_inf) / 3.0;
+}
+
+void crowning(address king) {
+    address nodes[100];
+    int index = 0;
+
+    nodes_at_level(king, 2, nodes, &index);
+
+    if (index == 0) {
+        printf("No heirs found at level 2\n");
+        return;
+    }
+
+    address heir = nodes[0];
+    float max_avg = calculateAverage(nodes[0]);
+	int heir_index = 0;
+	
+	for (int i = 1; i < index; i++) {
+	    float avg = calculateAverage(nodes[i]);
+	    if (avg > max_avg) {
+	        max_avg = avg;
+	        heir = nodes[i];
+	        heir_index = i;
+	    } else if (avg == max_avg) {
+	        if (nodes[i]->age > heir->age) {
+	            heir = nodes[i];
+	            heir_index = i;
+	        } else if (nodes[i]->age == heir->age && i < heir_index) {
+	            heir = nodes[i];
+	            heir_index = i;
+	        }
+	    }
+	}
+
+    if (heir->gender == 0) {
+        printf("SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
+    } else {
+        printf("SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
+    }
+}
+
