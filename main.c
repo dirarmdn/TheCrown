@@ -3,7 +3,8 @@
 #include <string.h>
 #include "header/boolean.h"
 #include "header/dhira.h"
-#include <conio.h> // for Windows
+#include "header/gia.h"
+#include <conio.h>
 
 int main() {
     int choice;
@@ -49,6 +50,7 @@ int main() {
                             printf("Enter your gender (L/P): ");
                             scanf(" %c", &gender);
                             choose_character(name, age, gender);
+                            display_main_character(player);
                             system("cls");
                             start_new_game = 0; // Set flag to false to avoid entering name again
                         }

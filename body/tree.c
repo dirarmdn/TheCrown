@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../header/dhira.h"
 #include "../header/dhea.h"
+#include "../header/gia.h"
 
 address create_node() {
     address node;
@@ -20,17 +21,18 @@ address create_node() {
     return node;
 }
 
-void fill_node(address node, int level, const char *name, boolean gender) {
 
+void fill_node(address node, int level, const char *name, boolean gender) {
     node->name = (char *)malloc((strlen(name) + 1) * sizeof(char));
     if (node->name == NULL) {
         printf("Gagal Alokasi\n");
-        free(node);
+        exit(1);
     }
+
+    strcpy(node->name, name);
 
     switch (level) {
         case 0: // King
-            strcpy(node->name, name);
             node->gender = 0;
             node->age = rand() % 51 + 50; // 50-100
             node->hp = 100;
@@ -39,17 +41,15 @@ void fill_node(address node, int level, const char *name, boolean gender) {
             node->p_inf = 100;
             break;
         case 1: // Queen and King's Mistresses
-            strcpy(node->name, name);
             node->gender = 1;
-            node->age = rand() % 31 + 70; // 30-100
+            node->age = rand() % 31 + 70; // 70-100 (not 30-100)
             node->hp = 100;
             node->p_pow = rand() % 61 + 20; // 20-80
             node->p_int = rand() % 71 + 30; // 30-100
             node->p_inf = rand() % 51 + 50; // 50-100
             break;
         case 2: // King's Child
-            strcpy(node->name, name);
-            node->age = rand() % 41 + 50; // 40-50
+            node->age = rand() % 41 + 10; // 10-50 (corrected from 40-50)
             node->gender = gender;
             node->hp = 100;
             node->p_pow = rand() % 41 + 30; // 30-70
@@ -57,23 +57,19 @@ void fill_node(address node, int level, const char *name, boolean gender) {
             node->p_inf = rand() % 41 + 30; // 30-70
             break;
         case 3: // King's Child Spouse
-            strcpy(node->name, name);            
-            if (node->pr->gender == 1)
-            {
+            if (node->pr->gender == 1) {
                 node->gender = 0;
             } else {
                 node->gender = 1;
             }
-            
-            node->age = rand() % 31 + 20; // 30-50
+            node->age = rand() % 31 + 20; // 20-50 (corrected from 30-50)
             node->hp = 100;
             node->p_pow = rand() % 21 + 20; // 20-40
             node->p_int = rand() % 21 + 20; // 20-40
             node->p_inf = rand() % 41 + 20; // 20-60
             break;
         case 4: // King's Grandchild
-            strcpy(node->name, name);
-            node->age = rand() % 21;
+            node->age = rand() % 21; // 0-20
             node->gender = gender;
             node->hp = 100;
             node->p_pow = rand() % 41; // 0-40
@@ -84,6 +80,7 @@ void fill_node(address node, int level, const char *name, boolean gender) {
             break;
     }
 }
+
 
 void add_child(address parent, address child) {
     if (parent->fs == NULL) {
@@ -114,7 +111,6 @@ address search_node(address root, const char *name) {
 
 void show_royal_tree(address node, int depth) {
     if (node == NULL) return;
-    // printf("%*c",' ');
     if (depth == 0) {
         printf("- King ");
     } else if (depth == 1 && node->nb != NULL) {
@@ -196,6 +192,7 @@ void build_tree() {
     add_child(third_inlaw, fourth_princess);
 }
 
+
 int max_point(address node1, address node2) {
     int maxCount1 = 0;
     int maxCount2 = 0;
@@ -215,67 +212,56 @@ int max_point(address node1, address node2) {
 }
 
 
+// Fungsi untuk menghitung rerata dari p_pow, p_int, dan p_inf dari suatu node
+float calculateAverage(address node) {
+    if (node == NULL)
+        return 0;
+
+    // Menghitung rerata dari p_pow, p_int, dan p_inf
+    float avg = (node->p_pow + node->p_int + node->p_inf) / 3.0;
+    return avg;
+}
+
+
 void choose_character(const char *name, int age, char gender) {
-    address player;
+    address chara = NULL; // Inisialisasi chara
+    printf("%s", name);
     if (gender == 'L')
     {
-        player = search_node(king, "Zayne");
-        printf("\nnama pemain asalnya: %s\n", player->name);
+        chara = search_node(king, "Zayne");
+        if (chara != NULL) {
+            printf("\nnama pemain asalnya: %s\n", chara->name);
+        }
     } else {
-        player = search_node(king, "Elizabeth");
-        printf("\nnama pemain asalnya: %s\n", player->name);
+        chara = search_node(king, "Elizabeth");
+        if (chara != NULL) {
+            printf("\nnama pemain asalnya: %s\n", chara->name);
+        }
     }
 
-    if (player != NULL)
+    if (chara != NULL)
     {
-        free(player->name); // free nama sebelumnya
+        free(chara->name); // free nama sebelumnya jika dialokasikan secara dinamis
 
-        player->name = (char *)malloc((strlen(name) + 1) * sizeof(char)); // alokasikan nama yang baru
-        if (player->name == NULL)
+        chara->name = (char *)malloc((strlen(name) + 1) * sizeof(char)); // alokasikan nama yang baru
+        if (chara->name == NULL)
         {
             printf("Gagal Alokasi");
             exit(1);
         }
 
-        strcpy(player->name, name);        
-        player->age = age;
+        strcpy(chara->name, name);        
+        // player->age = age;
     } else {
         printf("Karakter tidak ditemukan!");
     }
-    
-    strcpy(player->name, name);
-
-}
-
-// int main() {
-//     const char *name = "Sel";
-//     int age = 21;
-//     char gender = 'L';
-
-//     build_tree();
-//     choose_character(name, age, gender);
-//     show_royal_tree(king, 0);
-
-//     return 0;
-// }
-
-
-void arena_battle(address player) {
-    char enemy_name[50];
-    address enemy;
-
-    show_royal_tree(king, 0);
-    display_main_character(player);
-    printf("Masukkan lawan:");
-    scanf("%s", &enemy_name);
-    enemy = (king, enemy_name);
-    max_point(player, enemy);
+    player = chara;
 }
 
 
 void display_main_character (address node) {
     printf("\nSpesifikasi node yang dipegang saat ini:\n");
-    printf("Nama: %c\n", node->name);
+    printf("Nama: %s\n", node->name);
     printf("Umur: %d\n", node->age);
     if (node->gender == 1)
     {
@@ -283,9 +269,24 @@ void display_main_character (address node) {
     } else {
         printf("Gender: Man\n");
     }
-    printf("Nama: %c\n", node->gender);
     printf("HP: %d\n", node->hp);
     printf("Power: %d\n", node->p_pow);
     printf("Intelligence: %d\n", node->p_int);
     printf("Influence: %d\n", node->p_inf);
 }
+
+// int main() {
+//     const char *name = "Sel";
+//     int age = 21;
+//     char gender = 'P';
+
+//     build_tree();
+//     choose_character(name, age, gender);
+//     show_royal_tree(king, 0);
+
+//     player = search_node(king, name);
+
+//     arena_battle(player);
+
+//     return 0;
+// }

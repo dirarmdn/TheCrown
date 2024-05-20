@@ -14,5 +14,7 @@ address search_node();
 // Tujuan : menampilkan menu pemilihan 
 void display_stage();
 
+void arena_battle(address player);
+
 
 #endif

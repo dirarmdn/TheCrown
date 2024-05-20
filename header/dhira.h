@@ -54,10 +54,8 @@ void add_child(address parent, address child);
 // Tujuan : untuk memilih player node
 void choose_character(const char *name, int age, char gender);
 
-// Tujuan : untuk mencetak player node
-void display_main_character ();
-
 // Tujuan : mencetak royal family tree
 void show_royal_tree();
+
 
 #endif

@@ -4,12 +4,12 @@
 #include <conio.h>
 #include "../header/boolean.h"
 #include "../header/dhira.h"
+#include "../header/gia.h"
 
 void game_menu(const char *name) {
     int choice;
     int highlight = 1;
     int prev_highlight = -1;
-    address player; // Assuming player is declared and initialized somewhere
 
     while (1) {
         if (highlight != prev_highlight) {
@@ -41,19 +41,19 @@ void game_menu(const char *name) {
                 switch(highlight) {
                     case 1:
                         system("cls");
-                        arena_battle(player);
                         printf("Battle Arena selected.\n");
+                        arena_battle(player);
                         printf("\nPress any key to return to the menu...\n");
-                        getch();
+                        getch(); // Wait for key press to return to menu
                         break;
                     case 2:
                         system("cls");
                         printf("Election selected.\n");
                         printf("\nPress any key to return to the menu...\n");
-                        getch();
+                        getch(); // Wait for key press to return to menu
                         break;
                     case 3:
-                        return; // Return to previous menu
+                        return; // Exit to main menu
                     case 4:
                         printf("Exiting...\n");
                         exit(0);
@@ -86,18 +86,49 @@ void display_enter_name_screen() {
     printf("Enter your name: ");
 }
 
+void arena_battle(address player) {
+    char enemy_name[50];
+    address enemy;
+    int winner;
 
-// void display_welcome_screen(const char *name, int highlight) {
+    show_royal_tree(king, 0);
+    display_main_character(player);
 
-//     char *menu_items[MENU_ITEMS] = {"Battle Arena", "Election", "Exit to Main Menu", "Exit"};
-//     for(int i = 0; i < MENU_ITEMS; i++) {
-//         if(highlight == i + 1) {
-//             printf("%d. %s\n", i + 1, menu_items[i]);
-//         } else {
-//             printf("%d. %s\n", i + 1, menu_items[i]);
-//         }
-//     }
-// }
+    if (player->hp >
+     10) {
+        printf("Masukkan lawan: ");
+        scanf("%s", enemy_name);
+        enemy = search_node(king, enemy_name);
+        display_main_character(enemy);
+
+        winner = max_point(player, enemy);
+
+        if (winner == 1) {
+            printf("Congratulations, You win the battle!");
+            player->p_inf += 10;
+            player->p_int += 10;
+            player->p_pow += 10;
+            enemy->p_inf -= 10;
+            enemy->p_int -= 10;
+            enemy->p_pow -= 10;
+        } else if (winner == 2) {
+            printf("You Lose, try again next time");
+            player->p_inf -= 10;
+            player->p_int -= 10;
+            player->p_pow -= 10;
+            enemy->p_inf += 10;
+            enemy->p_int += 10;
+            enemy->p_pow += 10;
+        } else {
+            printf("It's a tie, try again next time");
+        }
+
+        player->hp -= 10;
+        enemy->hp -= 10;
+    } else {
+        printf("Your health is too low, you cannot participate in a battle anymore.\nPlease proceed to the election.");
+    }
+}
 
 void display_help_screen() {
     printf("How to play this game?\n");
@@ -111,14 +142,14 @@ void display_credits_screen() {
     printf("Firgianathyas Siti Fadillah (231511047)\n");
 }
 
-void arena_battle(address player) {
-    char enemy_name[50];
-    address enemy;
+// void arena_battle(address player) {
+//     char enemy_name[50];
+//     address enemy;
 
-    show_royal_tree(king, 0);
-    display_main_character(player);
-    printf("Masukkan lawan: ");
-    scanf("%s", enemy_name);
-    enemy = find_enemy_by_name(king, enemy_name); // Assuming you have a function to find the enemy by name
-    max_point(player, enemy);
-}
+//     show_royal_tree(king, 0);
+//     display_main_character(player);
+//     printf("Masukkan lawan: ");
+//     scanf("%s", enemy_name);
+//     enemy = find_enemy_by_name(king, enemy_name); // Assuming you have a function to find the enemy by name
+//     max_point(player, enemy);
+// }
