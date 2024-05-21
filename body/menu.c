@@ -85,7 +85,9 @@ void election(address player) { // Tambahkan parameter player
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                crowning(player);
+                crowning(king);
+                printf("\nPress any key to return to the menu...\n");
+                getch();
                 break;
             case 2:
                 printf("Terima kasih!\n"); // ini harusnya balik ke menu utama
