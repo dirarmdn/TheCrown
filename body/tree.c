@@ -247,7 +247,6 @@ void choose_character(const char *name, char gender) {
 
 
 void display_main_character (address node) {
-    printf("\nSpesifikasi node yang dipegang saat ini:\n");
     printf("Nama: %s\n", node->name);
     printf("Umur: %d\n", node->age);
     if (node->gender == 1)
@@ -261,22 +260,6 @@ void display_main_character (address node) {
     printf("Intelligence: %d\n", node->p_int);
     printf("Influence: %d\n", node->p_inf);
 }
-
-// int main() {
-//     const char *name = "Sel";
-//     int age = 21;
-//     char gender = 'P';
-
-//     build_tree();
-//     choose_character(name, age, gender);
-//     show_royal_tree(king, 0);
-
-//     player = search_node(king, name);
-
-//     arena_battle(player);
-
-//     return 0;
-// }
 
 void nodes_at_level(address root, int level, address *result, int *index) {
     if (root == NULL) {

@@ -26,7 +26,7 @@ address player;
 // Tujuan : menampilkan menu utama aplikasi
 void display_menu(int highlight);
 
-void game_menu(const char *name);
+void game_menu(const char *name, address player);
 
 // Tujuan : untuk menampilkan layar Credits
 void display_credits_screen();
