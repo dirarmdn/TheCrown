@@ -45,11 +45,9 @@ int main() {
                             printf("Starting New Game...\n");
                             printf("Enter your name: ");
                             scanf("%s", name);
-                            printf("Enter your age: ");
-                            scanf("%d", &age);
                             printf("Enter your gender (L/P): ");
                             scanf(" %c", &gender);
-                            choose_character(name, age, gender);
+                            choose_character(name, gender);
                             display_main_character(player);
                             system("cls");
                             start_new_game = 0; // Set flag to false to avoid entering name again

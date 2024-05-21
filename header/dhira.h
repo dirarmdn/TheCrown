@@ -28,19 +28,8 @@ void display_menu(int highlight);
 
 void game_menu(const char *name);
 
-// Tujuan : untuk menampilkan layar "Enter Your Name"
-void display_enter_name_screen();
-
-// Tujuan : untuk menampilkan layar "Welcome" dengan nama pemain
-// void display_welcome_screen(const char *name, int highlight);
-
-// Tujuan : untuk menampilkan layar "How to Play This Game?"
-void display_help_screen();
-
 // Tujuan : untuk menampilkan layar Credits
 void display_credits_screen();
-
-// Tree Processing
 
 // Tujuan : membuat node kosong dengan alokasi dinamis
 address create_node();
@@ -52,7 +41,7 @@ void build_tree();
 void add_child(address parent, address child);
 
 // Tujuan : untuk memilih player node
-void choose_character(const char *name, int age, char gender);
+void choose_character(const char *name, char gender);
 
 // Tujuan : mencetak royal family tree
 void show_royal_tree();

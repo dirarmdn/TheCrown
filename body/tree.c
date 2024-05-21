@@ -211,19 +211,7 @@ int max_point(address node1, address node2) {
     else return 0; // Jika seri
 }
 
-
-// Fungsi untuk menghitung rerata dari p_pow, p_int, dan p_inf dari suatu node
-float calculateAverage(address node) {
-    if (node == NULL)
-        return 0;
-
-    // Menghitung rerata dari p_pow, p_int, dan p_inf
-    float avg = (node->p_pow + node->p_int + node->p_inf) / 3.0;
-    return avg;
-}
-
-
-void choose_character(const char *name, int age, char gender) {
+void choose_character(const char *name, char gender) {
     address chara = NULL; // Inisialisasi chara
     printf("%s", name);
     if (gender == 'L')
@@ -251,7 +239,6 @@ void choose_character(const char *name, int age, char gender) {
         }
 
         strcpy(chara->name, name);        
-        // player->age = age;
     } else {
         printf("Karakter tidak ditemukan!");
     }
@@ -290,6 +277,7 @@ void display_main_character (address node) {
 
 //     return 0;
 // }
+
 void nodes_at_level(address root, int level, address *result, int *index) {
     if (root == NULL) {
         return;
