@@ -13,8 +13,9 @@ void arena_battle(address player) {
     int winner;
 
     while (1) {
-        system("cls");
+        system("cls"); // Bersihkan layar setiap kali masuk loop
         show_royal_tree(king, 0);
+        printf("\nYour Character:\n");
         display_main_character(player);
 
         printf("\n1. Mulai Pertandingan\n");
@@ -25,32 +26,25 @@ void arena_battle(address player) {
         switch (choice) {
             case 1:
                 if (player->hp > 10) {
+                    system("cls");
+                    show_royal_tree(king, 0);
                     printf("Masukkan lawan: ");
                     scanf("%s", enemy_name);
                     enemy = search_node(king, enemy_name);
+                    printf("\nYour Enemy:\n");
                     display_main_character(enemy);
 
                     winner = max_point(player, enemy);
 
                     if (winner == 1) {
-                        printf("Congratulations, You win the battle!\n");
-                        player->p_inf += 10;
-                        player->p_int += 10;
-                        player->p_pow += 10;
-                        enemy->p_inf -= 10;
-                        enemy->p_int -= 10;
-                        enemy->p_pow -= 10;
-                    } else if (winner == 2) {
-                        printf("You Lose, try again next time\n");
-                        player->p_inf -= 10;
-                        player->p_int -= 10;
-                        player->p_pow -= 10;
-                        enemy->p_inf += 10;
-                        enemy->p_int += 10;
-                        enemy->p_pow += 10;
-                    } else {
-                        printf("It's a tie, try again next time\n");
-                    }
+                    printf("Congratulations, You win the battle!\n");
+                    update_stats(player, enemy, 10, 10);
+                } else if (winner == 2) {
+                    printf("You Lose, try again next time\n");
+                    update_stats(enemy, player, 10, 10);
+                } else {
+                    printf("It's a tie, try again next time\n");
+                }
 
                     player->hp -= 10;
                     enemy->hp -= 10;
@@ -71,30 +65,33 @@ void arena_battle(address player) {
     }
 }
 
-void election() {
+void election(address player) { // Tambahkan parameter player
     int choice;
     do {
+        system("cls"); // Bersihkan layar setiap kali masuk loop
         printf("\n=====================================\n");
         printf("       PEMILIHAN PUTRA/PUTRI MAHKOTA\n");
         printf("=====================================\n");
         printf("\nTampilkan Pohon Kerajaan\n");
         show_royal_tree(king, 0);
         
-        printf("\nTampilkan Spesifikasi Karakter Utama\n");
+        printf("\nYour Character:\n");
         display_main_character(player);
         
         printf("\n Pilihan : \n");
         printf("1. Lakukan Pemilihan Putra atau Putri Mahkota\n");
-        printf("2. Keluar kembali ke mmenu utama\n");
+        printf("2. Keluar kembali ke menu utama\n");
         printf("Pilihan: ");
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                crowning(player);
+                crowning(king);
+                printf("\nPress any key to return to the menu...\n");
+                getch();
                 break;
             case 2:
-                printf("Terima kasih!\n"); //ini harusnya balik ke menu utamanya 
-                break;
+                printf("Terima kasih!\n"); // ini harusnya balik ke menu utama
+                return; // Keluar dari loop dan kembali ke menu utama
             default:
                 printf("Pilihan tidak valid!\n");
                 break;
@@ -102,7 +99,7 @@ void election() {
     } while (choice != 2);
 }
 
-void game_menu(const char *name) {
+void game_menu(const char *name, address player) { // Tambahkan parameter player
     int choice;
     int highlight = 1;
     int prev_highlight = -1;
@@ -113,6 +110,8 @@ void game_menu(const char *name) {
             printf("Welcome, %s!\n", name);
             printf("Royal Tree:\n");
             show_royal_tree(king, 0);
+            printf("\nYour Character:\n");
+            display_main_character(player);
             printf("%s1. Battle Arena\n", (highlight == 1) ? "> " : "  ");
             printf("%s2. Election\n", (highlight == 2) ? "> " : "  ");
             printf("%s3. Exit to Main Menu\n", (highlight == 3) ? "> " : "  ");
@@ -141,13 +140,15 @@ void game_menu(const char *name) {
                         arena_battle(player);
                         printf("\nPress any key to return to the menu...\n");
                         getch(); // Wait for key press to return to menu
+                        prev_highlight = -1;
                         break;
                     case 2:
                         system("cls");
                         printf("Election selected.\n");
-                        election();
+                        election(player); // Panggil election dengan parameter player
                         printf("\nPress any key to return to the menu...\n");
                         getch(); // Wait for key press to return to menu
+                        prev_highlight = -1;
                         break;
                     case 3:
                         return; // Exit to main menu

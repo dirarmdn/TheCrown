@@ -48,11 +48,12 @@ int main() {
                             printf("Enter your gender (L/P): ");
                             scanf(" %c", &gender);
                             choose_character(name, gender);
+                            printf("\nYour Character:\n");
                             display_main_character(player);
                             system("cls");
                             start_new_game = 0; // Set flag to false to avoid entering name again
                         }
-                        game_menu(name);
+                        game_menu(name, player);
                         prev_highlight = -1; // Reset highlight to refresh the menu
                         break;
                     case 2:
@@ -60,14 +61,14 @@ int main() {
                         display_help_screen();
                         printf("\nPress any key to return to the main menu...\n");
                         getch();
-                        prev_highlight = -1; // Reset highlight to refresh the menu
+                        prev_highlight = -1;
                         break;
                     case 3:
                         system("cls");
                         display_credits_screen();
                         printf("\nPress any key to return to the main menu...\n");
                         getch();
-                        prev_highlight = -1; // Reset highlight to refresh the menu
+                        prev_highlight = -1;
                         break;
                     case 4:
                         printf("Exiting...\n");
