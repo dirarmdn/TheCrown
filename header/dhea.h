@@ -15,5 +15,7 @@ address search_node(address root, const char *name);
 void arena_battle(address player);
 //Tujuan : menampilkan layar atau prompt yang meminta pemain untuk memasukkan nama mereka. 
 void display_enter_name_screen();
+//Tujuan : untuk memperbarui statistik (atribut) dari karakter yang menang dan karakter yang kalah setelah suatu pertandingan. 
+void update_stats(address winner, address loser, int win_points, int lose_points);
 
 #endif

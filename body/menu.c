@@ -33,24 +33,14 @@ void arena_battle(address player) {
                     winner = max_point(player, enemy);
 
                     if (winner == 1) {
-                        printf("Congratulations, You win the battle!\n");
-                        player->p_inf += 10;
-                        player->p_int += 10;
-                        player->p_pow += 10;
-                        enemy->p_inf -= 10;
-                        enemy->p_int -= 10;
-                        enemy->p_pow -= 10;
-                    } else if (winner == 2) {
-                        printf("You Lose, try again next time\n");
-                        player->p_inf -= 10;
-                        player->p_int -= 10;
-                        player->p_pow -= 10;
-                        enemy->p_inf += 10;
-                        enemy->p_int += 10;
-                        enemy->p_pow += 10;
-                    } else {
-                        printf("It's a tie, try again next time\n");
-                    }
+                    printf("Congratulations, You win the battle!\n");
+                    update_stats(player, enemy, 10, 10);
+                } else if (winner == 2) {
+                    printf("You Lose, try again next time\n");
+                    update_stats(enemy, player, 10, 10);
+                } else {
+                    printf("It's a tie, try again next time\n");
+                }
 
                     player->hp -= 10;
                     enemy->hp -= 10;
