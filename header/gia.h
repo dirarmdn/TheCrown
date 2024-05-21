@@ -5,6 +5,8 @@
 #define GIA_H
 #include "dhira.h"
 
+// Tujuan : menampilkan menu pemilihan 
+void display_stage();
 // Tujuan : untuk mencetak player node
 void display_main_character(address node);
 

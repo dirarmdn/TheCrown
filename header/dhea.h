@@ -11,11 +11,11 @@ void fill_node(address node, int level, const char *name, boolean gender);
 int max_point(address node1, address node2);
 // Tujuan : mencari node 
 address search_node(address root, const char *name);
-// Tujuan : menampilkan menu pemilihan 
-void display_stage();
-
+//Tujuan : memfasilitasi pertarungan antara karakter pemain yang ditentukan oleh player dengan karakter musuh yang dipilih oleh pemain.
 void arena_battle(address player);
-
+//Tujuan : menampilkan layar atau prompt yang meminta pemain untuk memasukkan nama mereka. 
 void display_enter_name_screen();
+//Tujuan : untuk memperbarui statistik (atribut) dari karakter yang menang dan karakter yang kalah setelah suatu pertandingan. 
+void update_stats(address winner, address loser, int win_points, int lose_points);
 
 #endif
