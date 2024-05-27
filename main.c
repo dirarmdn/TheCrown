@@ -18,14 +18,6 @@ int main() {
     while (1) {
         if (highlight != prev_highlight) {
             system("cls");
-                printf(" [][][] /\"\"\"\\ [][][]\n");
-                printf("  |::| /____\\ |::|\n");
-                printf("  |[]|_|::::|_|[]|\n");
-                printf("  |::::::__::::::|\n");
-                printf("  |:::::/||\\:::::|\n");
-                printf("  |:#:::||||::#::|\n");
-                printf(" #%*###&*##&*&#*&##\n");
-                printf("##%%*####*%%%###*%*#\n");
             display_menu(highlight);
             prev_highlight = highlight;
         }
