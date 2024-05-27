@@ -82,14 +82,14 @@ void election(address player) { // Tambahkan parameter player
         show_royal_tree(king, 0);
 
         printf("\nTampilkan Spesifikasi Karakter Utama\n");
-        display_main_character(king);
+        display_main_character(player);
 
 		printf("\nPara Kandidat:");
 		printLevel2Nodes(king);
 
         printf("\n Pilihan : \n");
         printf("1. Lakukan Pemilihan Putra atau Putri Mahkota\n");
-        printf("2. Kembali\n");
+        printf("2. Exit to Main Menu\n");
         printf("Pilihan: ");
         scanf("%d", &choice);
         switch (choice) {
@@ -97,14 +97,13 @@ void election(address player) { // Tambahkan parameter player
                 crowning(king);
                 break;
             case 2:
-                printf("Terima kasih!\n");
+                return;
                 break;
             default:
                 printf("Pilihan tidak valid!\n");
                 break;
         }
     } while (choice != 2);
-    return 0;
 }
 
 
@@ -222,8 +221,8 @@ void display_enter_name_screen() {
 
 void display_help_screen() {
     printf("\n ============================ CARA UNTUK MEMAINKAN THE CROWN ============================= \n");
-    printf("Tujuan : \n");
-    printf("Game ini bertujuan untuk menentukan pada siapa gelar putra/putri mahkota diberikan \n");
+    printf(" Tujuan : \n");
+    printf(" Game ini bertujuan untuk menentukan pada siapa gelar putra/putri mahkota diberikan \n");
 
     printf("\n Cara memainkan The Crown");
     printf("\n Pemain harus mengimputkan nama, jenis kelamin terlebih dahulu");

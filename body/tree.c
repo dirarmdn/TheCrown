@@ -39,6 +39,7 @@ void fill_node(address node, int level, const char *name, boolean gender) {
             node->p_pow = 100;
             node->p_int = 100;
             node->p_inf = 100;
+            node->ptp = 1;
             break;
         case 1: // Queen and King's Mistresses
             node->gender = 1;
@@ -47,6 +48,7 @@ void fill_node(address node, int level, const char *name, boolean gender) {
             node->p_pow = rand() % 61 + 20; // 20-80
             node->p_int = rand() % 71 + 30; // 30-100
             node->p_inf = rand() % 51 + 50; // 50-100
+            node->ptp = 0;
             break;
         case 2: // King's Child
             node->age = rand() % 41 + 10; // 10-50 (corrected from 40-50)
@@ -55,6 +57,7 @@ void fill_node(address node, int level, const char *name, boolean gender) {
             node->p_pow = rand() % 41 + 30; // 30-70
             node->p_int = rand() % 41 + 30; // 30-70
             node->p_inf = rand() % 41 + 30; // 30-70
+            node->ptp = 0;
             break;
         case 3: // King's Child Spouse
             if (node->pr->gender == 1) {
@@ -67,6 +70,7 @@ void fill_node(address node, int level, const char *name, boolean gender) {
             node->p_pow = rand() % 21 + 20; // 20-40
             node->p_int = rand() % 21 + 20; // 20-40
             node->p_inf = rand() % 41 + 20; // 20-60
+            node->ptp = 0;
             break;
         case 4: // King's Grandchild
             node->age = rand() % 21; // 0-20
@@ -75,6 +79,7 @@ void fill_node(address node, int level, const char *name, boolean gender) {
             node->p_pow = rand() % 41; // 0-40
             node->p_int = rand() % 41; // 0-40
             node->p_inf = rand() % 41; // 0-40
+            node->ptp = 0;
             break;
         default:
             break;
@@ -303,21 +308,19 @@ void getLevel2Addresses(royal_tree root, address **array, int *size) {
     }
 }
 
-// Fungsi untuk mencetak informasi kerajaan dari alamat node
-void printKerajaanInfo(address k) {
-    printf("Name: %s, Age: %d, Gender: %s, HP: %d, P_Pow: %d, P_Int: %d, P_Inf: %d, PTP: %s\n",
-           k->name, k->age, k->gender ? "Male" : "Female", k->hp, k->p_pow, k->p_int, k->p_inf, k->ptp ? "Yes" : "No");
-}
 
 // Fungsi untuk mencetak node pada level 2 dari sebuah tree
 void printLevel2Nodes(royal_tree root) {
     address *array = NULL;
     int size = 0;
     getLevel2Addresses(root, &array, &size);
-
+    
     // Mencetak informasi elemen di array
     for (int i = 0; i < size; i++) {
-        printKerajaanInfo(array[i]);
+        if(array[i]->ptp == 0){
+        printf("\n -Name: %s, Age: %d, P_Pow: %d, P_Int: %d, P_Inf: %d",
+           array[i]->name, array[i]->age, array[i]->p_pow, array[i]->p_int, array[i]->p_inf);
+        }
     }
 
     // Membersihkan memori yang dialokasikan
