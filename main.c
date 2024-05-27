@@ -92,6 +92,14 @@ int main() {
                     default:
                         printf("Invalid choice!\n");
                         break;
+                     int choice = 1;
+                        while (1) {
+                            system("cls");
+                            display_menu(choice);
+                            choice = getch();
+                            // Handle main menu logic here
+                        }
+                        return 0;
                 }
                 break;
         }

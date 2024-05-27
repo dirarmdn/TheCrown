@@ -16,6 +16,7 @@ typedef struct t_kingdom {
     int hp; // health point
     int p_pow, p_int, p_inf; // power, intelligence, influence
     address nb, fs, pr; // next brother, first son, parent
+    boolean ptp; // pernah terpilih (sebagai putra/putri mahkota)
 } kingdom; 
 typedef address royal_tree;
 address king;

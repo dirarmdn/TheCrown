@@ -17,5 +17,7 @@ void arena_battle(address player);
 void display_enter_name_screen();
 //Tujuan : untuk memperbarui statistik (atribut) dari karakter yang menang dan karakter yang kalah setelah suatu pertandingan. 
 void update_stats(address winner, address loser, int win_points, int lose_points);
+//Gambar kastil untuk menu utama agar menu terlihat menarik
+void print_kastil();
 
 #endif
