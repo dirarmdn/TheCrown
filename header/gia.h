@@ -12,15 +12,19 @@ void display_main_character(address node);
 
 float calculateAverage(address node);
 
+int countLevel2(royal_tree root);
+
+void getLevel2Addresses(royal_tree root, address **array, int *size);
+
+void printKerajaanInfo(address k);
+
+void printLevel2Nodes(royal_tree root);
+
 void crowning(address king);
 
 void election();
 
 // Tujuan : untuk menampilkan layar "How to Play This Game?"
 void display_help_screen();
-
-void nodes_at_level(address root, int level, address *result, int *index);
-
-float calculateAverage(address node);
 
 #endif

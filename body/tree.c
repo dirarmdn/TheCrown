@@ -261,61 +261,121 @@ void display_main_character (address node) {
     printf("Influence: %d\n", node->p_inf);
 }
 
-void nodes_at_level(address root, int level, address *result, int *index) {
+// Fungsi untuk menghitung jumlah elemen di level 2
+int countLevel2(royal_tree root) {
     if (root == NULL) {
+        return 0;
+    }
+    int count = 0;
+    address firstSon = root->fs;
+    while (firstSon != NULL) {
+        address secondLevelChild = firstSon->fs;
+        while (secondLevelChild != NULL) {
+            count++;
+            secondLevelChild = secondLevelChild->nb;
+        }
+        firstSon = firstSon->nb;
+    }
+    return count;
+}
+
+// Fungsi untuk mengalokasikan alamat node dari level 2 ke sebuah array
+void getLevel2Addresses(royal_tree root, address **array, int *size) {
+    if (root == NULL) {
+        *array = NULL;
+        *size = 0;
         return;
     }
-    if (level == 0) {
-        result[(*index)++] = root;
-    } else {
-        nodes_at_level(root->fs, level - 1, result, index);
-        nodes_at_level(root->nb, level, result, index);
+
+    *size = countLevel2(root);
+    *array = (address *)malloc(*size * sizeof(address));
+
+    int index = 0;
+    address firstSon = root->fs;
+    while (firstSon != NULL) {
+        address secondLevelChild = firstSon->fs;
+        while (secondLevelChild != NULL) {
+            (*array)[index] = secondLevelChild;
+            index++;
+            secondLevelChild = secondLevelChild->nb;
+        }
+        firstSon = firstSon->nb;
     }
 }
 
+// Fungsi untuk mencetak informasi kerajaan dari alamat node
+void printKerajaanInfo(address k) {
+    printf("Name: %s, Age: %d, Gender: %s, HP: %d, P_Pow: %d, P_Int: %d, P_Inf: %d, PTP: %s\n",
+           k->name, k->age, k->gender ? "Male" : "Female", k->hp, k->p_pow, k->p_int, k->p_inf, k->ptp ? "Yes" : "No");
+}
+
+// Fungsi untuk mencetak node pada level 2 dari sebuah tree
+void printLevel2Nodes(royal_tree root) {
+    address *array = NULL;
+    int size = 0;
+    getLevel2Addresses(root, &array, &size);
+
+    // Mencetak informasi elemen di array
+    for (int i = 0; i < size; i++) {
+        printKerajaanInfo(array[i]);
+    }
+
+    // Membersihkan memori yang dialokasikan
+    free(array);
+}
+
+// Fungsi untuk menghitung nilai rata-rata poin sebuah node
 float calculateAverage(address node) {
     if (node == NULL)
         return 0;
     return (node->p_pow + node->p_int + node->p_inf) / 3.0;
 }
 
+// Fungsi untuk memilih putra/putri mahkota
 void crowning(address king) {
-    address nodes[100];
-    int index = 0;
+    address *nodes = NULL;
+    int size = 0;
 
-    nodes_at_level(king, 2, nodes, &index);
+    getLevel2Addresses(king, &nodes, &size);
 
-    if (index == 0) {
+    if (size == 0) {
         printf("No heirs found at level 2\n");
         return;
     }
 
     address heir = nodes[0];
     float max_avg = calculateAverage(nodes[0]);
-	int heir_index = 0;
-	
-	for (int i = 1; i < index; i++) {
-	    float avg = calculateAverage(nodes[i]);
-	    if (avg > max_avg) {
-	        max_avg = avg;
-	        heir = nodes[i];
-	        heir_index = i;
-	    } else if (avg == max_avg) {
-	        if (nodes[i]->age > heir->age) {
-	            heir = nodes[i];
-	            heir_index = i;
-	        } else if (nodes[i]->age == heir->age && i < heir_index) {
-	            heir = nodes[i];
-	            heir_index = i;
-	        }
-	    }
-	}
+    int heir_index = 0;
+
+    for (int i = 1; i < size; i++) {
+    	if(heir->ptp == 1){
+    		float avg = calculateAverage(nodes[i]);
+        	if (avg > max_avg) {
+            	max_avg = avg;
+            	heir = nodes[i];
+            	heir_index = i;
+        	} else if (avg == max_avg) {
+            	if (nodes[i]->age > heir->age) {
+                	heir = nodes[i];
+                	heir_index = i;
+            	} else if (nodes[i]->age == heir->age && i < heir_index) {
+                	heir = nodes[i];
+                	heir_index = i;
+            	}
+        	}
+		}
+    }
 
     if (heir->gender == 0) {
         printf("SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
     } else {
         printf("SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
     }
+    
+    heir->ptp = 1;
+
+    // Membersihkan memori yang dialokasikan
+    free(nodes);
 }
 
 // int main(){
