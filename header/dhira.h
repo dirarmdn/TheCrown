@@ -5,7 +5,7 @@
 #ifndef DHIRA_H
 #define DHIRA_H
 
-#define MENU_ITEMS 4 // Jumlah item dalam menu
+#define MENU_ITEMS 5 // Jumlah item dalam menu
 #define MAX_NAME_LENGTH 50
 
 typedef struct t_kingdom *address; 

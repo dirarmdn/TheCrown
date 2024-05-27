@@ -167,7 +167,7 @@ void game_menu(const char *name, address player) { // Tambahkan parameter player
 
 void display_menu(int highlight) {
     printf("The Crown : Battle to the top\n");
-    char *menu_items[] = {"Start New Game", "Help", "Credits", "Exit"};
+    char *menu_items[] = {"Start New Game", "Help", "Credits", "Game Scenario", "Exit"};
     int num_menu_items = sizeof(menu_items) / sizeof(menu_items[0]); // Calculate the number of menu items
 
     int i; // Declare the loop variable outside the loop

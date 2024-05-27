@@ -318,12 +318,6 @@ void crowning(address king) {
     }
 }
 
-// int main(){
-//     build_tree();
-//     crowning(king);
-// }
-
-
 void update_stats(address winner, address loser, int win_points, int lose_points) {
     winner->p_inf += win_points;
     winner->p_int += win_points;
@@ -332,3 +326,8 @@ void update_stats(address winner, address loser, int win_points, int lose_points
     loser->p_int -= lose_points;
     loser->p_pow -= lose_points;
 }
+
+// int main(){
+//     build_tree();
+//     crowning(king);
+// }

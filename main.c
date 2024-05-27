@@ -15,11 +15,17 @@ int main() {
     char gender;
     int start_new_game = 1;
 
-    build_tree();
-
     while (1) {
         if (highlight != prev_highlight) {
             system("cls");
+                printf(" [][][] /\"\"\"\\ [][][]\n");
+                printf("  |::| /____\\ |::|\n");
+                printf("  |[]|_|::::|_|[]|\n");
+                printf("  |::::::__::::::|\n");
+                printf("  |:::::/||\\:::::|\n");
+                printf("  |:#:::||||::#::|\n");
+                printf(" #%*###&*##&*&#*&##\n");
+                printf("##%%*####*%%%###*%*#\n");
             display_menu(highlight);
             prev_highlight = highlight;
         }
@@ -41,6 +47,9 @@ int main() {
                 switch(highlight) {
                     case 1:
                         if (start_new_game) {
+                            if(start_new_game == 1) {
+                                build_tree();
+                            }
                             system("cls");
                             printf("Starting New Game...\n");
                             printf("Enter your name: ");
@@ -51,7 +60,7 @@ int main() {
                             printf("\nYour Character:\n");
                             display_main_character(player);
                             system("cls");
-                            start_new_game = 0; // Set flag to false to avoid entering name again
+                            start_new_game = 0;
                         }
                         game_menu(name, player);
                         prev_highlight = -1; // Reset highlight to refresh the menu
@@ -71,6 +80,12 @@ int main() {
                         prev_highlight = -1;
                         break;
                     case 4:
+                        printf("Game Scenario - Testing Area");
+                        printf("1. Draw Condition");
+                        exit(0);
+                        prev_highlight = -1;
+                        break;
+                    case 5:
                         printf("Exiting...\n");
                         exit(0);
                         break;
