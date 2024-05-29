@@ -74,36 +74,61 @@ void arena_battle(address player) {
 
 void election(address player) { // Tambahkan parameter player
     int choice;
-    do {
-        printf("\n=====================================\n");
-        printf("       PEMILIHAN PUTRA/PUTRI MAHKOTA\n");
-        printf("=====================================\n");
-        printf("\nTampilkan Pohon Kerajaan\n");
-        show_royal_tree(king, 0);
+    int highlight = 1;
+    int prev_highlight = -1;
 
-        printf("\nTampilkan Spesifikasi Karakter Utama\n");
-        display_main_character(player);
+    while (1) {
+        if (highlight != prev_highlight) {
+            system("cls");
+            printf(TITLE_COLOR "       PEMILIHAN PUTRA/PUTRI MAHKOTA\n");
+            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+            printf(TITLE_COLOR "       Royal Tree:\n" RESET_COLOR);
+            show_royal_tree(king, 0);
+            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+            printf(TITLE_COLOR "     Your Character:\n" RESET_COLOR);
+            display_main_character(player);
+            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+            printf(TITLE_COLOR "     Para Kandidat:\n" RESET_COLOR);
+            printLevel2Nodes(king);
+            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+            printf("%s1. Lakukan Pemilihan Putra atau Putri Mahkota\n" RESET_COLOR, (highlight == 1) ? HIGHLIGHT_COLOR "> " : "  ");
+            printf("%s2. Exit\n" RESET_COLOR, (highlight == 2) ? HIGHLIGHT_COLOR "> " : "  ");
+            printf(BORDER_COLOR "=========================================\n" RESET_COLOR);
+            prev_highlight = highlight;
+        }
 
-		printf("\nPara Kandidat:");
-		printLevel2Nodes(king);
+        choice = getch(); // Get input from keyboard
 
-        printf("\n Pilihan : \n");
-        printf("1. Lakukan Pemilihan Putra atau Putri Mahkota\n");
-        printf("2. Exit to Main Menu\n");
-        printf("Pilihan: ");
-        scanf("%d", &choice);
-        switch (choice) {
-            case 1:
-                crowning(king);
+        switch(choice) {
+            case 72: // Up arrow
+                if (highlight > 1) {
+                    highlight--;
+                }
                 break;
-            case 2:
-                return;
+            case 80: // Down arrow
+                if (highlight < 4) {
+                    highlight++;
+                }
                 break;
-            default:
-                printf("Pilihan tidak valid!\n");
+            case 13: // Enter
+                switch(highlight) {
+                    case 1:
+                        system("cls");
+                        printf("Election selected.\n");
+                        crowning(king);
+                        printf("\nPress any key to return to the menu...\n");
+                        getch(); // Wait for key press to return to menu
+                        prev_highlight = -1;
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        printf("Invalid choice!\n");
+                        break;
+                }
                 break;
         }
-    } while (choice != 2);
+    }
 }
 
 
@@ -220,13 +245,15 @@ void display_enter_name_screen() {
 }
 
 void display_help_screen() {
-    printf("\n ============================ CARA UNTUK MEMAINKAN THE CROWN ============================= \n");
+    printf("\n ============================= CARA UNTUK MEMAINKAN THE CROWN ============================== \n");
     printf(" Tujuan : \n");
+    printf(" The Crown merupakan Game Roleplay \n");
     printf(" Game ini bertujuan untuk menentukan pada siapa gelar putra/putri mahkota diberikan \n");
 
     printf("\n Cara memainkan The Crown");
-    printf("\n Pemain harus mengimputkan nama, jenis kelamin terlebih dahulu");
-    printf("\n Silsilah keluarga kerajaan telah ditentukan \n");
+    printf("\n Pemain harus mengimputkan nama dan jenis kelamin terlebih dahulu");
+    printf("\n Dalam Game ini anda memerankan sebagai seorang putra / putri seorang Raja \n");
+    printf("\n Untuk memenangkan permainan ini anda harus terpilih menjadi seorang putra/putri mahkota");
 
     printf("\n Fitur yang dapat anda pilih adalah fitur pertandingan atau pemilihan");
 
@@ -239,7 +266,7 @@ void display_help_screen() {
     printf("\n Dalam pemilihan putra/putri mahkota kandidat yang berhak hanyalah anak dari King ");
     printf("\n Dalam penentuan putra/putri mahkota point dari pow, int, dan inf sangat berpengaruh");
     
-    printf("\n\n ====================================== HAVE FUN!!! ====================================== \n");
+    printf("\n\n ======================================= HAVE FUN!!! ======================================= \n");
 }
 
 void display_credits_screen() {

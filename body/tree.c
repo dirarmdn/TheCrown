@@ -318,7 +318,7 @@ void printLevel2Nodes(royal_tree root) {
     // Mencetak informasi elemen di array
     for (int i = 0; i < size; i++) {
         if(array[i]->ptp == 0){
-        printf("\n -Name: %s, Age: %d, P_Pow: %d, P_Int: %d, P_Inf: %d",
+        printf("-Name: %s, Age: %d, P_Pow: %d, P_Int: %d, P_Inf: %d \n",
            array[i]->name, array[i]->age, array[i]->p_pow, array[i]->p_int, array[i]->p_inf);
         }
     }
