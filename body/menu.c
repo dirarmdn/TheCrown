@@ -203,30 +203,30 @@ void game_menu(const char *name, address player) { // Tambahkan parameter player
 }
 
 void print_kastil() {
+    printf("\033[1;35m"); // Set color to magenta (pink)
     printf("   /\\                                                       /\\ \n");
-    printf("  |  |                       GAME                          |  |\n");
-    printf(" /----\\                THE Crown Battle                   /----\\\n");
+    printf("  |  |                     \033[1;35mThe Crown\033[0m                       |  |\n");
+    printf(" /----\\                \033[1;34mBattle to the top\033[0m                  /----\\\n");
     printf("[______]                                                 [______]\n");
-    printf("|    |         _____                        _____         |    |\n");
-    printf("|[]  |        [     ]                      [     ]        |  []|\n");
-    printf("|    |       [_______][ ][ ][ ][][ ][ ][ ][_______]       |    |\n");
-    printf("|    [ ][ ][ ]|     |  ,----------------,  |     |[ ][ ][ ]    |\n");
-    printf("|             |     |/'    ____..____    '\\|     |             |\n");
-    printf("\\  []         |     |    /'    ||    '\\    |     |        []   /\n");
-    printf("|      []     |     |   |o     ||     o|   |     |  []         |\n");
-    printf("|             |  _  |   |     _||_     |   |  _  |             |\n");
-    printf("|   []        | (_) |   |    (_||_)    |   | (_) |       []    |\n");
-    printf("|             |     |   |     (||)     |   |     |             |\n");
-    printf("|             |     |   |      ||      |   |     |             |\n");
-    printf("/''           |     |   |o     ||     o|   |     |           ''\\\n");
-    printf("[_____________[_______]--'------''------'--[_______]_____________]\n");
-
-    return 0;
+    printf("|    |         \033[1;35m_____\033[0m                        \033[1;35m_____\033[0m         |    |\n");
+    printf("|[]  |        \033[1;35m[     ]\033[0m                      \033[1;35m[     ]\033[0m        |  []|\n");
+    printf("|    |       \033[1;35m[_______][ ][ ][ ][][ ][ ][ ][_______]\033[0m       |    |\n");
+    printf("|    [ ][ ][ ]\033[1;34m|     |  ,----------------,  |     |\033[0m[ ][ ][ ]    |\n");
+    printf("|             \033[1;34m|     |/'    ____..____    '\\|     |\033[0m             |\n");
+    printf("\\  []         \033[1;34m|     |    /'    ||    '\\    |     |\033[0m        []   /\n");
+    printf("|      []     \033[1;34m|     |   |o     ||     o|   |     |\033[0m  []         |\n");
+    printf("|             \033[1;34m|  _  |   |     _||_     |   |  _  |\033[0m             |\n");
+    printf("|   []        \033[1;34m| (_) |   |    (_||_)    |   | (_) |\033[0m       []    |\n");
+    printf("|             \033[1;34m|     |   |     (||)     |   |     |\033[0m             |\n");
+    printf("|             \033[1;34m|     |   |      ||      |   |     |\033[0m             |\n");
+    printf("/''           \033[1;34m|     |   |o     ||     o|   |     |\033[0m           ''\\\n");
+    printf("[_____________\033[1;35m[_______]--'------''------'--[_______]\033[0m_____________]\n");
+    printf("\033[0m"); // Reset color
 }
+
 
 void display_menu(int highlight) {
     print_kastil();
-    printf(TITLE_COLOR "The Crown : Battle to the top\n" RESET_COLOR);
     char *menu_items[] = {"Start New Game", "Help", "Credits", "Game Scenario", "Exit"};
     int num_menu_items = sizeof(menu_items) / sizeof(menu_items[0]); // Calculate the number of menu items
 
@@ -245,29 +245,49 @@ void display_enter_name_screen() {
 }
 
 void display_help_screen() {
+    printf("\033[1;35m"); //pink
     printf("\n ============================= CARA UNTUK MEMAINKAN THE CROWN ============================== \n");
+    printf("\033[0m"); 
+
+    printf("\033[1;32m"); 
     printf(" Tujuan : \n");
+    printf("\033[0m"); 
+
     printf(" The Crown merupakan Game Roleplay \n");
     printf(" Game ini bertujuan untuk menentukan pada siapa gelar putra/putri mahkota diberikan \n");
 
-    printf("\n Cara memainkan The Crown");
-    printf("\n Pemain harus mengimputkan nama dan jenis kelamin terlebih dahulu");
-    printf("\n Dalam Game ini anda memerankan sebagai seorang putra / putri seorang Raja \n");
-    printf("\n Untuk memenangkan permainan ini anda harus terpilih menjadi seorang putra/putri mahkota");
+    printf("\033[1;32m"); 
+    printf("\n Cara memainkan The Crown\n");
+    printf("\033[0m"); 
 
-    printf("\n Fitur yang dapat anda pilih adalah fitur pertandingan atau pemilihan");
+    printf(" Pemain harus mengimputkan nama dan jenis kelamin terlebih dahulu\n");
+    printf(" Dalam Game ini anda memerankan sebagai seorang putra / putri seorang Raja \n");
+    printf(" Untuk memenangkan permainan ini anda harus terpilih menjadi seorang putra/putri mahkota\n");
 
-    printf("\n Dalam pertandingan pemain diharuskan memasukan nama lawan");
-    printf("\n Nama lawan harus sama persis seperti nama dalam silsilah keluarga yang ditampilkan");
-    printf("\n\t Setiap kamu melakukan pertandingan HP point mu itu berkurang 10 point");
-    printf("\n\t Setiap kamu memenangkan pertandingan point pow, int, inf mu bertambah 10 point");
-    printf("\n\t Setiap kamu kalah dalam pertandingan point pow, int, inf mu berkurang 10 point");
+    printf("\033[1;32m"); 
+    printf("\n Fitur yang dapat anda pilih adalah fitur pertandingan atau pemilihan\n");
+    printf("\033[0m"); 
 
-    printf("\n Dalam pemilihan putra/putri mahkota kandidat yang berhak hanyalah anak dari King ");
-    printf("\n Dalam penentuan putra/putri mahkota point dari pow, int, dan inf sangat berpengaruh");
-    
+    printf("\033[1;34m"); 
+    printf("\n Dalam pertandingan pemain diharuskan memasukan nama lawan\n");
+    printf("\033[0m"); 
+
+    printf(" Nama lawan harus sama persis seperti nama dalam silsilah keluarga yang ditampilkan\n");
+    printf("\t Setiap kamu melakukan pertandingan \033[1;31mHP point\033[0m mu itu berkurang 10 point\n"); // Set color to red for HP point
+    printf("\t Setiap kamu memenangkan pertandingan \033[1;32mpoint pow, int, inf\033[0m mu bertambah 10 point\n"); // Set color to green for pow, int, inf
+    printf("\t Setiap kamu kalah dalam pertandingan \033[1;31mpoint pow, int, inf\033[0m mu berkurang 10 point\n"); // Set color to red for pow, int, inf
+
+    printf("\033[1;34m"); 
+    printf("\n Dalam pemilihan putra/putri mahkota kandidat yang berhak hanyalah anak dari King\n");
+    printf("\033[0m"); 
+
+    printf(" Dalam penentuan putra/putri mahkota point dari \033[1;32mpow, int, dan inf\033[0m sangat berpengaruh\n"); // Set color to green for pow, int, inf
+
+    printf("\033[1;35m"); 
     printf("\n\n ======================================= HAVE FUN!!! ======================================= \n");
+    printf("\033[0m"); 
 }
+
 
 void display_credits_screen() {
     printf(MENU_COLOR "Our Team:\n" RESET_COLOR);
