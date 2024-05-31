@@ -69,27 +69,34 @@ void election(address player) { // Tambahkan parameter player
     int choice;
     int highlight = 1;
     int prev_highlight = -1;
-    do {
-        printf("\n=====================================\n");
-        printf("       PEMILIHAN PUTRA/PUTRI MAHKOTA\n");
-        printf("=====================================\n");
-        printf("\nTampilkan Pohon Kerajaan\n");
-        show_royal_tree(king, 0);
 
-        printf("\nTampilkan Spesifikasi Karakter Utama\n");
-        display_main_character(player);
+    while (1) {
+        if (highlight != prev_highlight) {
+            system("cls");
+            printf(TITLE_COLOR "       PEMILIHAN PUTRA/PUTRI MAHKOTA\n");
+            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+            printf(TITLE_COLOR "       Royal Tree:\n" RESET_COLOR);
+            show_royal_tree(king, 0);
+            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+            printf(TITLE_COLOR "     Your Character:\n" RESET_COLOR);
+            display_main_character(player);
+            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+            printf(TITLE_COLOR "     Para Kandidat:\n" RESET_COLOR);
+            printLevel2Nodes(king);
+            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+            printf("%s1. Lakukan Pemilihan Putra atau Putri Mahkota\n" RESET_COLOR, (highlight == 1) ? HIGHLIGHT_COLOR "> " : "  ");
+            printf("%s2. Exit\n" RESET_COLOR, (highlight == 2) ? HIGHLIGHT_COLOR "> " : "  ");
+            printf(BORDER_COLOR "=========================================\n" RESET_COLOR);
+            prev_highlight = highlight;
+        }
 
-		printf("\nPara Kandidat:\n");
-		printLevel2Nodes(king);
+        choice = getch(); // Get input from keyboard
 
-        printf("\n Pilihan : \n");
-        printf("1. Lakukan Pemilihan Putra atau Putri Mahkota\n");
-        printf("2. Kembali\n");
-        printf("Pilihan: ");
-        scanf("%d", &choice);
-        switch (choice) {
-            case 1:
-                crowning(king);
+        switch(choice) {
+            case 72: // Up arrow
+                if (highlight > 1) {
+                    highlight--;
+                }
                 break;
             case 80: // Down arrow
                 if (highlight < 4) {
@@ -114,8 +121,7 @@ void election(address player) { // Tambahkan parameter player
                 }
                 break;
         }
-    } while (choice != 2);
-    return 0;
+    }
 }
 
 
