@@ -12,6 +12,7 @@
 #define TITLE_COLOR "\033[1;35m"      // Bright magenta
 #define BORDER_COLOR "\033[1;36m"     // Bright cyan
 #define YELLOW_COLOR "\033[1;33m"
+#define RED_COLOR "\033[1;31m"        // Bright red
 
 // Tujuan : Mengisi node kosong 
 void fill_node(address node, int level, const char *name, boolean gender);

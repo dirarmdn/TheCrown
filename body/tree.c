@@ -34,61 +34,67 @@ void fill_node(address node, int level, const char *name, boolean gender)
 
     strcpy(node->name, name);
 
-    switch (level) {
-        case 0: // King
+    switch (level)
+    {
+    case 0: // King
+        node->gender = 0;
+        node->age = rand() % 51 + 50; // 50-100
+        node->hp = 100;
+        node->p_pow = 100;
+        node->p_int = 100;
+        node->p_inf = 100;
+        break;
+    case 1: // Queen and King's Mistresses
+        node->gender = 1;
+        node->age = rand() % 31 + 70; // 70-100 (not 30-100)
+        node->hp = 100;
+        node->p_pow = rand() % 61 + 20; // 20-80
+        node->p_int = rand() % 71 + 30; // 30-100
+        node->p_inf = rand() % 51 + 50; // 50-100
+        break;
+    case 2:                           // King's Child
+        node->age = rand() % 41 + 10; // 10-50 (corrected from 40-50)
+        node->gender = gender;
+        node->hp = 100;
+        if (isTesting == 1)
+        {
+            node->p_pow = 50; // 30-70
+            node->p_int = 50; // 30-70
+            node->p_inf = 50; // 30-70
+        }
+        else
+        {
+            node->p_pow = rand() % 41 + 30; // 30-70
+            node->p_int = rand() % 41 + 30; // 30-70
+            node->p_inf = rand() % 41 + 30; // 30-70
+        }
+
+        break;
+    case 3: // King's Child Spouse
+        if (node->pr->gender == 1)
+        {
             node->gender = 0;
-            node->age = rand() % 51 + 50; // 50-100
-            node->hp = 100;
-            node->p_pow = 100;
-            node->p_int = 100;
-            node->p_inf = 100;
-            break;
-        case 1: // Queen and King's Mistresses
+        }
+        else
+        {
             node->gender = 1;
-            node->age = rand() % 31 + 70; // 70-100 (not 30-100)
-            node->hp = 100;
-            node->p_pow = rand() % 61 + 20; // 20-80
-            node->p_int = rand() % 71 + 30; // 30-100
-            node->p_inf = rand() % 51 + 50; // 50-100
-            break;
-        case 2: // King's Child
-            node->age = rand() % 41 + 10; // 10-50 (corrected from 40-50)
-            node->gender = gender;
-            node->hp = 100;
-            if (isTesting == 1)
-            {
-                node->p_pow = 50; // 30-70
-                node->p_int = 50; // 30-70
-                node->p_inf = 50; // 30-70
-            } else {
-                node->p_pow = rand() % 41 + 30; // 30-70
-                node->p_int = rand() % 41 + 30; // 30-70
-                node->p_inf = rand() % 41 + 30; // 30-70
-            }
-            
-            break;
-        case 3: // King's Child Spouse
-            if (node->pr->gender == 1) {
-                node->gender = 0;
-            } else {
-                node->gender = 1;
-            }
-            node->age = rand() % 31 + 20; // 20-50 (corrected from 30-50)
-            node->hp = 100;
-            node->p_pow = rand() % 21 + 20; // 20-40
-            node->p_int = rand() % 21 + 20; // 20-40
-            node->p_inf = rand() % 41 + 20; // 20-60
-            break;
-        case 4: // King's Grandchild
-            node->age = rand() % 21; // 0-20
-            node->gender = gender;
-            node->hp = 100;
-            node->p_pow = rand() % 41; // 0-40
-            node->p_int = rand() % 41; // 0-40
-            node->p_inf = rand() % 41; // 0-40
-            break;
-        default:
-            break;
+        }
+        node->age = rand() % 31 + 20; // 20-50 (corrected from 30-50)
+        node->hp = 100;
+        node->p_pow = rand() % 21 + 20; // 20-40
+        node->p_int = rand() % 21 + 20; // 20-40
+        node->p_inf = rand() % 41 + 20; // 20-60
+        break;
+    case 4:                      // King's Grandchild
+        node->age = rand() % 21; // 0-20
+        node->gender = gender;
+        node->hp = 100;
+        node->p_pow = rand() % 41; // 0-40
+        node->p_int = rand() % 41; // 0-40
+        node->p_inf = rand() % 41; // 0-40
+        break;
+    default:
+        break;
     }
 }
 
@@ -125,39 +131,10 @@ address search_node(address root, const char *name)
     return result;
 }
 
-// void show_royal_tree(address node, int depth) {
-//     if (node == NULL) return;
-//     if (depth == 0) {
-//         printf("- King ");
-//     } else if (depth == 1 && node->nb != NULL) {
-//         printf("+ + Queen ");
-//     } else if (depth == 1 && node->nb == NULL) {
-//         printf("+ + Mistress ");
-//     } else if (depth == 2 && node->gender == 0) {
-//         printf("- - - Prince ");
-//     } else if (depth == 2 && node->gender == 1) {
-//         printf("- - - Princess ");
-//     } else if (depth == 3 && node->gender == 0) {
-//         printf("+ + + Prince ");
-//     } else if (depth == 3 && node->gender == 1) {
-//         printf("+ + + Princess ");
-//     } else if (depth > 3 && node->gender == 0) {
-//         printf("- - - - Prince ");
-//     } else if (depth > 3 && node->gender == 1) {
-//         printf("- - - - Princess ");
-//     }
-
-//     printf("%s\n", node->name); // Print the entire name
-//     show_royal_tree(node->fs, depth + 1); // print first son recursively
-//     show_royal_tree(node->nb, depth); // print next brother recursively at the same depth
-// }
-
 void show_royal_tree(address root, int level)
 {
     if (root == NULL)
         return;
-
-    // Print indentation based on the level
     for (int i = 0; i < level; i++)
     {
         if (i == level - 1)
@@ -202,11 +179,13 @@ void show_royal_tree(address root, int level)
     }
     if (level == 0)
     {
-        printf(YELLOW_COLOR"King %s\n", root->name);
-    } else {
+        printf(YELLOW_COLOR "King %s\n", root->name);
+    }
+    else
+    {
         printf("%s\n", root->name);
     }
-    
+
     // Print children recursively
     if (root->fs != NULL)
     {
@@ -347,22 +326,19 @@ void choose_character(const char *name, char gender)
 
 void display_main_character(address node)
 {
-    printf(BORDER_COLOR "===========================\n" RESET_COLOR);
-    printf("Nama: %s\n", node->name);
-    printf("Umur: %d\n", node->age);
+    printf(BORDER_COLOR "======================================\n" RESET_COLOR);
+    printf("Nama: %-16s | Intelligence: %-3d\n", node->name, node->p_int);
+    printf("Umur: %-16d | Power: %-3d\n", node->age, node->p_pow);
     if (node->gender == 1)
     {
-        printf("Gender: Woman\n");
+        printf("Gender: %-14s | Influence: %-3d\n", "Woman", node->p_inf);
     }
     else
     {
-        printf("Gender: Man\n");
+        printf("Gender: %-14s | Influence: %-3d\n", "Man", node->p_inf);
     }
-    printf("HP: %d\n", node->hp);
-    printf("Power: %d\n", node->p_pow);
-    printf("Intelligence: %d\n", node->p_int);
-    printf("Influence: %d\n", node->p_inf);
-    printf(BORDER_COLOR "===========================\n" RESET_COLOR);
+    printf("HP: %-18d\n", node->hp);
+    printf(BORDER_COLOR "======================================\n" RESET_COLOR);
 }
 
 // Fungsi untuk menghitung jumlah elemen di level 2
@@ -416,7 +392,8 @@ void getLevel2Addresses(royal_tree root, address **array, int *size)
 }
 
 // Fungsi untuk mencetak informasi kerajaan dari alamat node
-void printKerajaanInfo(address k) {
+void printKerajaanInfo(address k)
+{
     printf("Name: %s, Age: %d, Gender: %s, HP: %d, P_Pow: %d, P_Int: %d, P_Inf: %d, PTP: %s\n",
            k->name, k->age, k->gender ? "Male" : "Female", k->hp, k->p_pow, k->p_int, k->p_inf, k->ptp ? "Yes" : "No");
 }
@@ -427,9 +404,10 @@ void printLevel2Nodes(royal_tree root)
     address *array = NULL;
     int size = 0;
     getLevel2Addresses(root, &array, &size);
-    
+
     // Mencetak informasi elemen di array
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
+    {
         printKerajaanInfo(array[i]);
     }
 
@@ -514,13 +492,3 @@ void update_stats(address winner, address loser, int win_points, int lose_points
     loser->p_int -= lose_points;
     loser->p_pow -= lose_points;
 }
-
-void testing()
-{
-}
-
-// int main(){
-    
-//     build_tree();
-//     crowning(king);
-// }
