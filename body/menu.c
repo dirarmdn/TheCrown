@@ -18,7 +18,6 @@ void arena_battle(address player) {
         show_royal_tree(king, 0);
         printf("\nYour Character:\n");
         display_main_character(player);
-
         printf("\n1. Mulai Pertandingan\n");
         printf("2. Kembali ke Menu Utama\n");
         printf("Pilihan: ");
@@ -68,6 +67,8 @@ void arena_battle(address player) {
 
 void election(address player) { // Tambahkan parameter player
     int choice;
+    int highlight = 1;
+    int prev_highlight = -1;
     do {
         printf("\n=====================================\n");
         printf("       PEMILIHAN PUTRA/PUTRI MAHKOTA\n");
@@ -76,9 +77,9 @@ void election(address player) { // Tambahkan parameter player
         show_royal_tree(king, 0);
 
         printf("\nTampilkan Spesifikasi Karakter Utama\n");
-        display_main_character(king);
+        display_main_character(player);
 
-		printf("\nPara Kandidat:");
+		printf("\nPara Kandidat:\n");
 		printLevel2Nodes(king);
 
         printf("\n Pilihan : \n");
@@ -113,7 +114,8 @@ void election(address player) { // Tambahkan parameter player
                 }
                 break;
         }
-    }
+    } while (choice != 2);
+    return 0;
 }
 
 
@@ -125,7 +127,7 @@ void game_menu(const char *name, address player) { // Tambahkan parameter player
     while (1) {
         if (highlight != prev_highlight) {
             system("cls");
-            printf(TITLE_COLOR " Welcome, %s! \n" RESET_COLOR, name);
+            printf(TITLE_COLOR " Welcome, %s! \n" RESET_COLOR, player->name);
             printf(BORDER_COLOR "===========================\n" RESET_COLOR);
             printf(TITLE_COLOR "       Royal Tree:\n" RESET_COLOR);
             show_royal_tree(king, 0);

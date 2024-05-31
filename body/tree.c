@@ -55,9 +55,17 @@ void fill_node(address node, int level, const char *name, boolean gender)
             node->age = rand() % 41 + 10; // 10-50 (corrected from 40-50)
             node->gender = gender;
             node->hp = 100;
-            node->p_pow = rand() % 41 + 30; // 30-70
-            node->p_int = rand() % 41 + 30; // 30-70
-            node->p_inf = rand() % 41 + 30; // 30-70
+            if (isTesting == 1)
+            {
+                node->p_pow = 50; // 30-70
+                node->p_int = 50; // 30-70
+                node->p_inf = 50; // 30-70
+            } else {
+                node->p_pow = rand() % 41 + 30; // 30-70
+                node->p_int = rand() % 41 + 30; // 30-70
+                node->p_inf = rand() % 41 + 30; // 30-70
+            }
+            
             break;
         case 3: // King's Child Spouse
             if (node->pr->gender == 1) {
