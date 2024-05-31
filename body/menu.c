@@ -5,13 +5,7 @@
 #include "../header/boolean.h"
 #include "../header/dhira.h"
 #include "../header/gia.h"
-
-// Define color codes for improved aesthetics
-#define RESET_COLOR "\033[0m"
-#define HIGHLIGHT_COLOR "\033[1;32m"  // Bright green
-#define MENU_COLOR "\033[1;34m"       // Bright blue
-#define TITLE_COLOR "\033[1;35m"      // Bright magenta
-#define BORDER_COLOR "\033[1;36m"     // Bright cyan
+#include "../header/dhea.h"
 
 void arena_battle(address player) {
     int choice;
@@ -85,7 +79,7 @@ void election(address player) { // Tambahkan parameter player
         display_main_character(king);
 
 		printf("\nPara Kandidat:");
-		printLevel2Nodes(king);
+		printLevel2Nodes(player);
 
         printf("\n Pilihan : \n");
         printf("1. Lakukan Pemilihan Putra atau Putri Mahkota\n");
@@ -120,10 +114,10 @@ void game_menu(const char *name, address player) { // Tambahkan parameter player
             printf(BORDER_COLOR "===========================\n" RESET_COLOR);
             printf(TITLE_COLOR "       Royal Tree:\n" RESET_COLOR);
             show_royal_tree(king, 0);
-            printf(BORDER_COLOR "===========================\n" RESET_COLOR);
+            
             printf(TITLE_COLOR "     Your Character:\n" RESET_COLOR);
             display_main_character(player);
-            printf(BORDER_COLOR "===========================\n" RESET_COLOR);
+            
             printf("%s1. Battle Arena\n" RESET_COLOR, (highlight == 1) ? HIGHLIGHT_COLOR "> " : "  ");
             printf("%s2. Election\n" RESET_COLOR, (highlight == 2) ? HIGHLIGHT_COLOR "> " : "  ");
             printf("%s3. Exit to Main Menu\n" RESET_COLOR, (highlight == 3) ? HIGHLIGHT_COLOR "> " : "  ");
@@ -199,6 +193,8 @@ void print_kastil() {
 
     return 0;
 }
+
+
 
 void display_menu(int highlight) {
     print_kastil();

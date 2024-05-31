@@ -5,6 +5,14 @@
 #ifndef DHEA_H
 #define DHEA_H
 
+// Define color codes for improved aesthetics
+#define RESET_COLOR "\033[0m"
+#define HIGHLIGHT_COLOR "\033[1;32m"  // Bright green
+#define MENU_COLOR "\033[1;34m"       // Bright blue
+#define TITLE_COLOR "\033[1;35m"      // Bright magenta
+#define BORDER_COLOR "\033[1;36m"     // Bright cyan
+#define YELLOW_COLOR "\033[1;33m"
+
 // Tujuan : Mengisi node kosong 
 void fill_node(address node, int level, const char *name, boolean gender);
 // Tujuan : membandingkan poin 2 node 

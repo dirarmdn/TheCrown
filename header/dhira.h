@@ -22,6 +22,8 @@ typedef address royal_tree;
 address king;
 address player;
 
+boolean isTesting;
+
 // Interface
 
 // Tujuan : menampilkan menu utama aplikasi
@@ -45,7 +47,7 @@ void add_child(address parent, address child);
 void choose_character(const char *name, char gender);
 
 // Tujuan : mencetak royal family tree
-void show_royal_tree();
+void show_royal_tree(address root, int level);
 
 
 #endif

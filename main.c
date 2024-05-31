@@ -3,6 +3,7 @@
 #include <string.h>
 #include "header/boolean.h"
 #include "header/dhira.h"
+#include "header/dhea.h"
 #include "header/gia.h"
 #include <conio.h>
 
@@ -72,8 +73,21 @@ int main() {
                         prev_highlight = -1;
                         break;
                     case 4:
-                        printf("Game Scenario - Testing Area");
-                        printf("1. Draw Condition");
+                        printf("Game Scenario - Testing Area\n");
+                        // printf("1. Tie Condition");
+                        isTesting = 1;
+                        printf("Condition 1 : Draw");
+                        if (isTesting == 1)
+                        {
+                            build_tree();
+                            choose_character("Main Character", 0);
+                            game_menu(name, player);
+                        }
+                        
+                        build_tree();
+                        // printf("Enter your choice:");
+                        // scanf("%d", scenario_choice);
+                        
                         exit(0);
                         prev_highlight = -1;
                         break;
@@ -84,12 +98,11 @@ int main() {
                     default:
                         printf("Invalid choice!\n");
                         break;
-                     int choice = 1;
+                        int choice = 1;
                         while (1) {
                             system("cls");
                             display_menu(choice);
                             choice = getch();
-                            // Handle main menu logic here
                         }
                         return 0;
                 }
