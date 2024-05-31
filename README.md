@@ -17,13 +17,6 @@ D3 Teknik Informatika
 - [Introduction](#introduction)
 - [Features](#features)
 - [Data Structure](#data-structure)
-- [User Interface](#user-interface)
-- [Example Output](#example-output)
-- [Source Code](#source-code)
-- [Testing](#testing)
-- [Conclusion](#conclusion)
-- [Lessons Learned](#lessons-learned)
-- [References](#references)
 
 ## Introduction
 
