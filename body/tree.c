@@ -391,25 +391,35 @@ void getLevel2Addresses(royal_tree root, address **array, int *size)
     }
 }
 
-// Fungsi untuk mencetak informasi kerajaan dari alamat node
-void printKerajaanInfo(address k)
-{
-    printf("Name: %s, Age: %d, Gender: %s, HP: %d, P_Pow: %d, P_Int: %d, P_Inf: %d, PTP: %s\n",
-           k->name, k->age, k->gender ? "Male" : "Female", k->hp, k->p_pow, k->p_int, k->p_inf, k->ptp ? "Yes" : "No");
+void printLine(int length) {
+    for (int i = 0; i < length; i++) {
+        printf("-");
+    }
+    printf("\n");
 }
 
-// Fungsi untuk mencetak node pada level 2 dari sebuah tree
+// Fungsi untuk mencetak para kandidat
 void printLevel2Nodes(royal_tree root)
 {
     address *array = NULL;
     int size = 0;
     getLevel2Addresses(root, &array, &size);
 
-    // Mencetak informasi elemen di array
-    for (int i = 0; i < size; i++)
-    {
-        printKerajaanInfo(array[i]);
+    // Mencetak header tabel
+    printLine(42);
+    printf("| %-10s | %-3s | %-5s | %-5s | %-5s |\n", "Name", "Age", "P_Pow", "P_Int", "P_Inf");
+    printLine(42);
+
+    // Mencetak baris data
+    for (int i = 0; i < size; i++) {
+        if (array[i]->ptp == 0) {
+            printf("| %-10s | %-3d | %-5d | %-5d | %-5d |\n",
+                   array[i]->name, array[i]->age, array[i]->p_pow, array[i]->p_int, array[i]->p_inf);
+        }
     }
+
+    // Mencetak footer tabel
+    printLine(42);
 
     // Membersihkan memori yang dialokasikan
     free(array);
@@ -440,9 +450,11 @@ void crowning(address king)
     address heir = nodes[0];
     float max_avg = calculateAverage(nodes[0]);
     int heir_index = 0;
+    int pat = size;
 
     for (int i = 1; i < size; i++)
     {
+        pat--;
         if (heir->ptp == 1)
         {
             float avg = calculateAverage(nodes[i]);
@@ -468,19 +480,31 @@ void crowning(address king)
         }
     }
 
-    if (heir->gender == 0)
-    {
-        printf("SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
-    }
-    else
-    {
-        printf("SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
-    }
-
+    if (heir == player){
+        printCrowningMessage(heir);
+        printf("Menang");
+        exit(0);
+    } else if (pat == 2){
+        printCrowningMessage(heir);
+        printf("Kalah");
+        //kalah
+        exit(0);
+    } 
+    printCrowningMessage(heir);
     heir->ptp = 1;
 
     // Membersihkan memori yang dialokasikan
     free(nodes);
+}
+
+void printCrowningMessage(address heir) {
+    printf("\nSelecting the heir...\n");
+    sleep(1);
+    if (heir->gender == 0) {
+        printf("SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
+    } else {
+        printf("SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
+    }
 }
 
 void update_stats(address winner, address loser, int win_points, int lose_points)

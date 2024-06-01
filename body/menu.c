@@ -161,11 +161,12 @@ void election(address player)
         if (highlight != prev_highlight)
         {
             system("cls");
+            printf(TITLE_COLOR " \tWelcome, %s! \n" RESET_COLOR, player->name);
             printf(TITLE_COLOR "       PEMILIHAN PUTRA/PUTRI MAHKOTA\n");
             printf(BORDER_COLOR "========================================\n" RESET_COLOR);
-            printf(TITLE_COLOR "\t\tTHE ROYAL TREE\n" RESET_COLOR);
+            printf(TITLE_COLOR "       Royal Tree:\n" RESET_COLOR);
             show_royal_tree(king, 0);
-            printf(BORDER_COLOR "========================================\n" RESET_COLOR);
+
             printf(TITLE_COLOR "     Your Character:\n" RESET_COLOR);
             display_main_character(player);
             printf(BORDER_COLOR "========================================\n" RESET_COLOR);
@@ -398,7 +399,7 @@ void display_hello(address player)
 {
     system("cls");
     printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
-    printf(YELLOW_COLOR"\tnWelcome to TheCrown, Your Majesty %s\n\n", player->name);
+    printf(YELLOW_COLOR"\t\nWelcome to The Crown, Your Majesty %s\n\n", player->name);
     printf("\tAre you ready to battle for The Crown?\n\n\n" RESET_COLOR);
     printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
     sleep(3);
