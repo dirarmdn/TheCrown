@@ -75,7 +75,8 @@ void arena_battle(address player)
                 }
                 else if (enemy == player->pr)
                 {
-                    printf("You can't fight your own mother. Behave.\n");
+                    error_handling(2, "You can't fight your own mother. Behave.\n");
+                    // printf("You can't fight your own mother. Behave.\n");
                     printf("\nPress any key to return to the menu...\n");
                     getch();
                     break;
@@ -402,4 +403,23 @@ void display_hello(address player)
     printf("\tAre you ready to battle for The Crown?\n\n\n" RESET_COLOR);
     printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
     sleep(3);
+}
+
+void error_handling(int error_type, char *error_msg) {
+    switch (error_type) {
+    case 1:
+        printf(RED_COLOR "[ERROR] " RESET_COLOR);
+        printf("%s\n", error_msg);
+        break;
+    case 2:
+        printf(YELLOW_COLOR "[WARNING] " RESET_COLOR);
+        printf("%s\n", error_msg);
+        break;  
+    case 3:
+        printf(MENU_COLOR "[INFO] " RESET_COLOR);
+        printf("%s", error_msg);
+        break;  
+    default:
+        break;
+    }
 }
