@@ -8,6 +8,26 @@
 #include "../header/gia.h"
 #include "../header/dhea.h"
 
+void error_handling(int error_type, char *error_msg) {
+    switch (error_type) {
+    case 1:
+        printf(RED_COLOR "[ERROR] " RESET_COLOR);
+        printf("%s\n", error_msg);
+        break;
+    case 2:
+        printf(YELLOW_COLOR "[WARNING] " RESET_COLOR);
+        printf("%s\n", error_msg);
+        break;  
+    case 3:
+        printf(MENU_COLOR "[INFO] " RESET_COLOR);
+        printf("%s", error_msg);
+        break;  
+    default:
+        break;
+    }
+}
+
+
 void print_battle_animation()
 {
     const char *animation[] = {
@@ -68,7 +88,7 @@ void arena_battle(address player)
                 enemy = search_node(king, enemy_name);
                 if (enemy == NULL)
                 {
-                    printf("Lawan tidak ditemukan! Silakan coba lagi.\n");
+                    error_handling(1, "Lawan tidak ditemukan! Silakan coba lagi.\n");
                     printf("\nPress any key to return to the menu...\n");
                     getch();
                     break;
@@ -76,21 +96,20 @@ void arena_battle(address player)
                 else if (enemy == player->pr)
                 {
                     error_handling(2, "You can't fight your own mother. Behave.\n");
-                    // printf("You can't fight your own mother. Behave.\n");
                     printf("\nPress any key to return to the menu...\n");
                     getch();
                     break;
                 }
                 else if (enemy == player->fs)
                 {
-                    printf("You can't fight your spouse. Be nice to them.\n");
+                    error_handling(2, "You can't fight your spouse. Be nice to them.\n");
                     printf("\nPress any key to return to the menu...\n");
                     getch();
                     break;
                 }
                 else if (enemy == player->pr->pr)
                 {
-                    printf("You can't fight the king.\n");
+                    error_handling(2, "You can't fight the king.\n");
                     printf("\nPress any key to return to the menu...\n");
                     getch();
                     break;
@@ -135,7 +154,7 @@ void arena_battle(address player)
             }
             else
             {
-                printf("Your health is too low, you cannot participate in a battle anymore.\nPlease proceed to the election.\n");
+                error_handling(2, "Your health is too low, you cannot participate in a battle anymore.\nPlease proceed to the election.\n");
             }
             printf("\nPress any key to return to the menu...\n");
             getch();
@@ -143,7 +162,7 @@ void arena_battle(address player)
         case 2:
             return; // Kembali ke menu utama
         default:
-            printf("Pilihan tidak valid!\n");
+            error_handling(1, "Invalid choice!\n");
             printf("Press any key to try again...\n");
             getch();
             break;
@@ -210,7 +229,7 @@ void election(address player)
             case 2:
                 return;
             default:
-                printf("Invalid choice!\n");
+                error_handling(1, "Invalid choice!\n");
                 break;
             }
             break;
@@ -287,7 +306,7 @@ void game_menu(const char *name, address player)
                 exit(0);
                 break;
             default:
-                printf("Invalid choice!\n");
+                error_handling(1, "Invalid choice!\n");
                 break;
             }
             break;
@@ -400,27 +419,8 @@ void display_hello(address player)
 {
     system("cls");
     printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
-    printf(YELLOW_COLOR"\t\nWelcome to The Crown, Your Majesty %s\n\n", player->name);
+    printf(YELLOW_COLOR"\n\tWelcome to The Crown, Your Majesty %s\n\n", player->name);
     printf("\tAre you ready to battle for The Crown?\n\n\n" RESET_COLOR);
     printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
     sleep(3);
-}
-
-void error_handling(int error_type, char *error_msg) {
-    switch (error_type) {
-    case 1:
-        printf(RED_COLOR "[ERROR] " RESET_COLOR);
-        printf("%s\n", error_msg);
-        break;
-    case 2:
-        printf(YELLOW_COLOR "[WARNING] " RESET_COLOR);
-        printf("%s\n", error_msg);
-        break;  
-    case 3:
-        printf(MENU_COLOR "[INFO] " RESET_COLOR);
-        printf("%s", error_msg);
-        break;  
-    default:
-        break;
-    }
 }

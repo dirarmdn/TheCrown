@@ -88,7 +88,7 @@ int main()
                 if (isTesting == 1)
                 {
                     build_tree();
-                    choose_character("Main Character", 0);
+                    choose_character("MC", 0);
                     game_menu(name, player);
                 }
 

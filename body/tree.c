@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "../header/dhira.h"
 #include "../header/dhea.h"
 #include "../header/gia.h"
@@ -56,6 +57,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->age = rand() % 41 + 10; // 10-50 (corrected from 40-50)
         node->gender = gender;
         node->hp = 100;
+        node->ptp = 0;
         if (isTesting == 1)
         {
             node->p_pow = 50; // 30-70
@@ -412,9 +414,8 @@ void printLevel2Nodes(royal_tree root)
 
     // Mencetak baris data
     for (int i = 0; i < size; i++) {
-        if (array[i]->ptp == 0) {
-            printf("| %-10s | %-3d | %-5d | %-5d | %-5d |\n",
-                   array[i]->name, array[i]->age, array[i]->p_pow, array[i]->p_int, array[i]->p_inf);
+        if (array[i]->ptp == 0) {            
+            printf("| %-10s | %-3d | %-5d | %-5d | %-5d |\n", array[i]->name, array[i]->age, array[i]->p_pow, array[i]->p_int, array[i]->p_inf);
         }
     }
 
@@ -424,6 +425,17 @@ void printLevel2Nodes(royal_tree root)
     // Membersihkan memori yang dialokasikan
     free(array);
 }
+
+void printCrowningMessage(address heir) {
+    printf("\nSelecting the heir...\n");
+    sleep(1);
+    if (heir->gender == 0) {
+        printf("SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
+    } else {
+        printf("SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
+    }
+}
+
 
 // Fungsi untuk menghitung nilai rata-rata poin sebuah node
 float calculateAverage(address node)
@@ -495,16 +507,6 @@ void crowning(address king)
 
     // Membersihkan memori yang dialokasikan
     free(nodes);
-}
-
-void printCrowningMessage(address heir) {
-    printf("\nSelecting the heir...\n");
-    sleep(1);
-    if (heir->gender == 0) {
-        printf("SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
-    } else {
-        printf("SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
-    }
 }
 
 void update_stats(address winner, address loser, int win_points, int lose_points)
