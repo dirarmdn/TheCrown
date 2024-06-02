@@ -53,7 +53,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_pow = rand() % 61 + 20; // 20-80
         node->p_int = rand() % 71 + 30; // 30-100
         node->p_inf = rand() % 51 + 50; // 50-100
-        node->ptp = 0;
+        node->isCrowned = 0;
         break;
     case 2:                           // King's Child
         node->age = rand() % 41 + 10; // 10-50
@@ -97,7 +97,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_pow = rand() % 41; // 0-40
         node->p_int = rand() % 41; // 0-40
         node->p_inf = rand() % 41; // 0-40
-        node->ptp = 0;
+        node->isCrowned = 0;
         break;
     default:
         break;

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.c": "c",
+        "dhira.h": "c",
+        "dhea.h": "c"
+    }
+}
