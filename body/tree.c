@@ -427,12 +427,12 @@ void printLevel2Nodes(royal_tree root)
 }
 
 void printCrowningMessage(address heir) {
-    printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
-    printf("\nSelecting the heir...\n\n");
+    printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
+    printf("Selecting the heir...\n\n" RESET_COLOR);
     if (heir->gender == 0) {
-        printf(YELLOW_COLOR"SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
+        printf(YELLOW_COLOR"\n\tSELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
     } else {
-        printf(YELLOW_COLOR"SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
+        printf(YELLOW_COLOR"\n\tSELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
     }
     printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
     sleep(3);
@@ -468,7 +468,6 @@ void crowning(address king)
 
     for (int i = 1; i < size; i++)
     {
-        pat--;
         if (heir->ptp == 1)
         {
             float avg = calculateAverage(nodes[i]);
@@ -503,7 +502,7 @@ void crowning(address king)
         printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
         sleep(3);
         exit(0);
-    } else if (pat == 2 || heir != player){
+    } else if (pat == 2 && heir != player){
         printCrowningMessage(heir);
         system("cls");
         printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
@@ -511,11 +510,11 @@ void crowning(address king)
         printf("\tTerimakasih Sudah Bermain Game Kami\n\n\n" RESET_COLOR);
         printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
         sleep(3);
-        //kalah
         exit(0);
     } 
     printCrowningMessage(heir);
     heir->ptp = 1;
+    pat--;
 
     // Membersihkan memori yang dialokasikan
     free(nodes);
