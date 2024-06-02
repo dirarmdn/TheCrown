@@ -54,7 +54,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_inf = rand() % 51 + 50; // 50-100
         break;
     case 2:                           // King's Child
-        node->age = rand() % 41 + 10; // 10-50 (corrected from 40-50)
+        node->age = rand() % 41 + 10; // 10-50
         node->gender = gender;
         node->hp = 100;
         node->ptp = 0;
@@ -429,6 +429,7 @@ void printLevel2Nodes(royal_tree root)
 void printCrowningMessage(address heir) {
     printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
     printf("Selecting the heir...\n\n" RESET_COLOR);
+    sleep(2);
     if (heir->gender == 0) {
         printf(YELLOW_COLOR"\nSELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
     } else {
