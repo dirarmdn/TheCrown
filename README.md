@@ -59,6 +59,6 @@ typedef struct t_kerajaan {
     address nb; // Next Brother
     address fs; // First Son
     address pr; // Parent
-    boolean ptp; // Previously Crown Prince/Princess
+    boolean isCrowned; // Previously Crown Prince/Princess
 } kerajaan; 
 typedef address royal_tree;

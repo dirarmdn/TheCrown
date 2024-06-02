@@ -17,12 +17,11 @@ typedef struct t_kingdom
     int hp;                  // health point
     int p_pow, p_int, p_inf; // power, intelligence, influence
     address nb, fs, pr;      // next brother, first son, parent
-    boolean ptp;             // pernah terpilih (sebagai putra/putri mahkota)
+    boolean isCrowned;             // pernah terpilih (sebagai putra/putri mahkota)
 } kingdom;
 typedef address royal_tree;
 address king;
 address player;
-
 boolean isTesting;
 
 // Interface
@@ -51,5 +50,9 @@ void choose_character(const char *name, char gender);
 // Tujuan : mencetak royal family tree
 void show_royal_tree(address root, int level);
 
+// Tujuan : untuk mencetak ucapan selamat datang di sebelum menu awal
 void display_hello(address player);
+
+// Tujuan untuk mencetak informasi kesalahan pada program
+void error_handling(int error_type, char *error_msg);
 #endif

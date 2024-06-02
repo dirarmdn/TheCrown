@@ -57,7 +57,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->age = rand() % 41 + 10; // 10-50
         node->gender = gender;
         node->hp = 100;
-        node->ptp = 0;
+        node->isCrowned = 0;
         if (isTesting == 1)
         {
             node->p_pow = 50; // 30-70
@@ -414,7 +414,7 @@ void printLevel2Nodes(royal_tree root)
 
     // Mencetak baris data
     for (int i = 0; i < size; i++) {
-        if (array[i]->ptp == 0) {            
+        if (array[i]->isCrowned == 0) {            
             printf("| %-10s | %-3d | %-5d | %-5d | %-5d |\n", array[i]->name, array[i]->age, array[i]->p_pow, array[i]->p_int, array[i]->p_inf);
         }
     }
@@ -469,7 +469,7 @@ void crowning(address king)
 
     for (int i = 1; i < size; i++)
     {
-        if (heir->ptp == 1)
+        if (heir->isCrowned == 1)
         {
             float avg = calculateAverage(nodes[i]);
             if (avg > max_avg)
@@ -514,7 +514,7 @@ void crowning(address king)
         exit(0);
     }
     printCrowningMessage(heir);
-    heir->ptp = 1;
+    heir->isCrowned = 1;
     pat--;
 
     // Membersihkan memori yang dialokasikan
