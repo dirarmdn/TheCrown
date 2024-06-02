@@ -430,9 +430,9 @@ void printCrowningMessage(address heir) {
     printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
     printf("Selecting the heir...\n\n" RESET_COLOR);
     if (heir->gender == 0) {
-        printf(YELLOW_COLOR"\n\tSELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
+        printf(YELLOW_COLOR"\nSELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
     } else {
-        printf(YELLOW_COLOR"\n\tSELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
+        printf(YELLOW_COLOR"\nSELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
     }
     printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
     sleep(3);
@@ -492,8 +492,6 @@ void crowning(address king)
             }
         }
     }
-
-    printf("%d", pat);
 
     if (heir == player){
         printCrowningMessage(heir);
