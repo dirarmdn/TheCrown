@@ -113,6 +113,10 @@ void arena_battle(address player)
                     printf("\nPress any key to return to the menu...\n");
                     getch();
                     break;
+                } else if (enemy->age < 18) {
+                    error_handling(2, "You can't fight children.\n");
+                                        getch();
+                    break;
                 }
                 system("cls");
                 printf("\nYour Enemy:\n");
