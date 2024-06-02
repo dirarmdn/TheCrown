@@ -43,7 +43,7 @@ void print_battle_animation()
         printf("\n\n\n");
         printf(RED_COLOR "%s\n", animation[i]);
         printf("\n\n\n");
-        sleep(1); // delay for animation effect
+        sleep(1); 
     }
 }
 
@@ -65,7 +65,7 @@ void arena_battle(address player)
 
     while (1)
     {
-        system("cls"); // Bersihkan layar setiap kali masuk loop
+        system("cls"); 
         printf(TITLE_COLOR "\t\tTHE ROYAL TREE\n" RESET_COLOR);
         show_royal_tree(king, 0);
         printf("\tYour Character:\n");
@@ -203,7 +203,7 @@ void election(address player)
             prev_highlight = highlight;
         }
 
-        choice = getch(); // Get input from keyboard
+        choice = getch(); 
 
         switch (choice)
         {
