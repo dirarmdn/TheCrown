@@ -427,13 +427,15 @@ void printLevel2Nodes(royal_tree root)
 }
 
 void printCrowningMessage(address heir) {
-    printf("\nSelecting the heir...\n");
-    sleep(1);
+    printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
+    printf("\nSelecting the heir...\n\n");
     if (heir->gender == 0) {
-        printf("SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
+        printf(YELLOW_COLOR"SELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
     } else {
-        printf("SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
+        printf(YELLOW_COLOR"SELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
     }
+    printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
+    sleep(3);
 }
 
 
@@ -494,11 +496,21 @@ void crowning(address king)
 
     if (heir == player){
         printCrowningMessage(heir);
-        printf("Menang");
+        system("cls");
+        printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
+        printf(YELLOW_COLOR"\n\tSelamat Kepada %s Telah Memenangkan Game ini\n\n", player->name);
+        printf("\tTerimakasih Sudah Bermain Game Kami\n\n\n" RESET_COLOR);
+        printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
+        sleep(3);
         exit(0);
-    } else if (pat == 2){
+    } else if (pat == 2 || heir != player){
         printCrowningMessage(heir);
-        printf("Kalah");
+        system("cls");
+        printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
+        printf(YELLOW_COLOR"\n\tMohon Maaf %s Anda Kalah dalam Permainan ini\n\n", player->name);
+        printf("\tTerimakasih Sudah Bermain Game Kami\n\n\n" RESET_COLOR);
+        printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
+        sleep(3);
         //kalah
         exit(0);
     } 

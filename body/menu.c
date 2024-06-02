@@ -224,7 +224,6 @@ void election(address player)
             {
             case 1:
                 system("cls");
-                printf("Election selected.\n");
                 crowning(king);
                 printf("\nPress any key to return to the menu...\n");
                 getch(); // Wait for key press to return to menu
