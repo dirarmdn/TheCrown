@@ -468,7 +468,6 @@ void crowning(address king)
 
     for (int i = 1; i < size; i++)
     {
-        pat--;
         if (heir->ptp == 1)
         {
             float avg = calculateAverage(nodes[i]);
@@ -494,6 +493,8 @@ void crowning(address king)
         }
     }
 
+    printf("%d", pat);
+
     if (heir == player){
         printCrowningMessage(heir);
         system("cls");
@@ -503,7 +504,7 @@ void crowning(address king)
         printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
         sleep(3);
         exit(0);
-    } else if (pat == 2 || heir != player){
+    } else if (pat == 2 && heir != player){
         printCrowningMessage(heir);
         system("cls");
         printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
@@ -513,9 +514,10 @@ void crowning(address king)
         sleep(3);
         //kalah
         exit(0);
-    } 
+    }
     printCrowningMessage(heir);
     heir->ptp = 1;
+    pat--;
 
     // Membersihkan memori yang dialokasikan
     free(nodes);
