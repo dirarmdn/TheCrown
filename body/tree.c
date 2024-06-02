@@ -55,25 +55,31 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_inf = rand() % 51 + 50; // 50-100
         node->isCrowned = 1;
         break;
-    case 2:  // King's Child
+    case 2:                           // King's Child
         node->age = rand() % 41 + 10; // 10-50
         node->gender = gender;
         node->hp = 100;
         node->isCrowned = 0;
-        if (isTesting == 1) {
+        if (isTesting == 1)
+        {
             node->p_pow = 50;
             node->p_int = 50;
             node->p_inf = 50;
-        } else {
+        }
+        else
+        {
             node->p_pow = rand() % 41 + 30; // 30-70
             node->p_int = rand() % 41 + 30; // 30-70
             node->p_inf = rand() % 41 + 30; // 30-70
         }
         break;
     case 3: // King's Child Spouse
-        if (node->pr->gender == 1) {
+        if (node->pr->gender == 1)
+        {
             node->gender = 0;
-        } else {
+        }
+        else
+        {
             node->gender = 1;
         }
         node->age = rand() % 31 + 20; // 20-50
@@ -83,7 +89,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_inf = rand() % 41 + 20; // 20-60
         node->isCrowned = 0;
         break;
-    case 4:  // King's Grandchild
+    case 4:                      // King's Grandchild
         node->age = rand() % 21; // 0-20
         node->gender = gender;
         node->hp = 100;
@@ -99,11 +105,15 @@ void fill_node(address node, int level, const char *name, boolean gender)
 
 void add_child(address parent, address child)
 {
-    if (parent->fs == NULL) {
+    if (parent->fs == NULL)
+    {
         parent->fs = child;
-    } else {
+    }
+    else
+    {
         address sibling = parent->fs;
-        while (sibling->nb != NULL) {
+        while (sibling->nb != NULL)
+        {
             sibling = sibling->nb;
         }
         sibling->nb = child;
@@ -279,9 +289,12 @@ void choose_character(const char *name, char gender)
 {
     address chara = NULL;
     printf("%s", name);
-    if (gender == 'L') {
+    if (gender == 'L')
+    {
         chara = search_node(king, "Zayne");
-    } else {
+    }
+    else
+    {
         chara = search_node(king, "Elizabeth");
     }
 
@@ -292,13 +305,15 @@ void choose_character(const char *name, char gender)
         chara->name = (char *)malloc((strlen(name) + 1) * sizeof(char)); // alokasikan nama yang baru
         if (chara->name == NULL)
         {
-            printf("Gagal Alokasi");
+            printf("Allocation Failed");
             exit(1);
         }
 
         strcpy(chara->name, name);
-    } else {
-        printf("Karakter tidak ditemukan!");
+    }
+    else
+    {
+        printf("Character Not Found!");
     }
     player = chara;
 }
@@ -370,8 +385,10 @@ void getLevel2Addresses(royal_tree root, address **array, int *size)
     }
 }
 
-void printLine(int length) {
-    for (int i = 0; i < length; i++) {
+void printLine(int length)
+{
+    for (int i = 0; i < length; i++)
+    {
         printf("-");
     }
     printf("\n");
@@ -390,8 +407,10 @@ void printLevel2Nodes(royal_tree root)
     printLine(42);
 
     // Mencetak baris data
-    for (int i = 0; i < size; i++) {
-        if (array[i]->isCrowned == 0) {            
+    for (int i = 0; i < size; i++)
+    {
+        if (array[i]->isCrowned == 0)
+        {
             printf("| %-10s | %-3d | %-5d | %-5d | %-5d |\n", array[i]->name, array[i]->age, array[i]->p_pow, array[i]->p_int, array[i]->p_inf);
         }
     }
@@ -403,19 +422,22 @@ void printLevel2Nodes(royal_tree root)
     free(array);
 }
 
-void printCrowningMessage(address heir) {
+void printCrowningMessage(address heir)
+{
     printf(BORDER_COLOR "=======================================================================\n" RESET_COLOR);
     printf("Selecting the heir...\n\n" RESET_COLOR);
     sleep(2);
-    if (heir->gender == 0) {
-        printf(YELLOW_COLOR"\n\tCongratulations to Prince %s has been crowned as the crown prince \n", heir->name);
-    } else {
-        printf(YELLOW_COLOR"\n\tCongratulations to Princess %s has been crowned as the crown prince\n", heir->name);
+    if (heir->gender == 0)
+    {
+        printf(YELLOW_COLOR "\n\tCongratulations to Prince %s has been crowned as the crown prince \n", heir->name);
+    }
+    else
+    {
+        printf(YELLOW_COLOR "\n\tCongratulations to Princess %s has been crowned as the crown princess\n", heir->name);
     }
     printf(BORDER_COLOR "=======================================================================\n" RESET_COLOR);
     sleep(3);
 }
-
 
 // Fungsi untuk menghitung nilai rata-rata poin sebuah node
 float calculateAverage(address node)
@@ -439,54 +461,54 @@ void crowning(address king)
         return;
     }
 
-    address heir = nodes[0];
-    float max_avg = calculateAverage(nodes[0]);
+    address heir = NULL;
+    float max_avg = 0;
     int heir_index = 0;
     int candidate = size;
 
-    for (int i = 1; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
-        if (heir->isCrowned != 1)
+        if (nodes[i]->isCrowned != 1)
         {
             float avg = calculateAverage(nodes[i]);
             if (avg > max_avg)
             {
                 max_avg = avg;
                 heir = nodes[i];
-                heir_index = i;
             }
             else if (avg == max_avg)
             {
                 if (nodes[i]->age > heir->age)
                 {
                     heir = nodes[i];
-                    heir_index = i;
-                }
-                else if (nodes[i]->age == heir->age && i < heir_index)
-                {
-                    heir = nodes[i];
-                    heir_index = i;
                 }
             }
         }
-        heir = nodes[i];
-        heir_index = i;
     }
 
-    if (heir == player){
+    if (heir == NULL)
+    {
+        printf("No suitable heir found\n");
+        return;
+    }
+
+    if (heir == player)
+    {
         printCrowningMessage(heir);
         system("cls");
         printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
-        printf(YELLOW_COLOR"\n\tCongratulations to %s for Winning This Game\n\n", player->name);
+        printf(YELLOW_COLOR "\n\tCongratulations to %s for Winning This Game\n\n", player->name);
         printf("\tThank You for Playing Our Game\n\n\n" RESET_COLOR);
         printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
         sleep(3);
         exit(0);
-    } else if (candidate == 2 && heir != player){
+    }
+    else if (candidate == 2 && heir != player)
+    {
         printCrowningMessage(heir);
         system("cls");
         printf(BORDER_COLOR "===============================================================\n\n" RESET_COLOR);
-        printf(YELLOW_COLOR"\n\tSorry %s, You Lost in This Game\n\n", player->name);
+        printf(YELLOW_COLOR "\n\tSorry %s, You Lost in This Game\n\n", player->name);
         printf("\tThank You for Playing Our Game\n\n\n" RESET_COLOR);
         printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
         sleep(3);
