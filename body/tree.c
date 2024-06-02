@@ -44,7 +44,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_pow = 100;
         node->p_int = 100;
         node->p_inf = 100;
-        node->ptp = 1;
+        node->isCrowned = 1;
         break;
     case 1: // Queen and King's Mistresses
         node->gender = 1;
@@ -473,7 +473,7 @@ void crowning(address king)
 
     for (int i = 1; i < size; i++)
     {
-        if (heir->isCrowned == 1)
+        if (heir->isCrowned != 1)
         {
             float avg = calculateAverage(nodes[i]);
             if (avg > max_avg)
@@ -496,6 +496,8 @@ void crowning(address king)
                 }
             }
         }
+        heir = nodes[i];
+        heir_index = i;
     }
 
     if (heir == player){
