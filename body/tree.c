@@ -44,6 +44,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_pow = 100;
         node->p_int = 100;
         node->p_inf = 100;
+        node->ptp = 1;
         break;
     case 1: // Queen and King's Mistresses
         node->gender = 1;
@@ -52,6 +53,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_pow = rand() % 61 + 20; // 20-80
         node->p_int = rand() % 71 + 30; // 30-100
         node->p_inf = rand() % 51 + 50; // 50-100
+        node->ptp = 0;
         break;
     case 2:                           // King's Child
         node->age = rand() % 41 + 10; // 10-50
@@ -86,6 +88,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_pow = rand() % 21 + 20; // 20-40
         node->p_int = rand() % 21 + 20; // 20-40
         node->p_inf = rand() % 41 + 20; // 20-60
+        node->ptp = 0;
         break;
     case 4:                      // King's Grandchild
         node->age = rand() % 21; // 0-20
@@ -94,6 +97,7 @@ void fill_node(address node, int level, const char *name, boolean gender)
         node->p_pow = rand() % 41; // 0-40
         node->p_int = rand() % 41; // 0-40
         node->p_inf = rand() % 41; // 0-40
+        node->ptp = 0;
         break;
     default:
         break;
@@ -431,9 +435,9 @@ void printCrowningMessage(address heir) {
     printf("Selecting the heir...\n\n" RESET_COLOR);
     sleep(2);
     if (heir->gender == 0) {
-        printf(YELLOW_COLOR"\nSELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
+        printf(YELLOW_COLOR"\n\tSELAMAT KEPADA PANGERAN %s TELAH DIANGKAT MENJADI PUTRA MAHKOTA\n", heir->name);
     } else {
-        printf(YELLOW_COLOR"\nSELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
+        printf(YELLOW_COLOR"\n\tSELAMAT KEPADA PUTRI %s TELAH DIANGKAT MENJADI PUTRI MAHKOTA\n", heir->name);
     }
     printf(BORDER_COLOR "===============================================================\n" RESET_COLOR);
     sleep(3);
@@ -469,7 +473,7 @@ void crowning(address king)
 
     for (int i = 1; i < size; i++)
     {
-        if (heir->ptp == 1)
+        if (heir->ptp != 1)
         {
             float avg = calculateAverage(nodes[i]);
             if (avg > max_avg)
